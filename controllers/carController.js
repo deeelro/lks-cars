@@ -1,16 +1,32 @@
 const Car = require('../models/carModel');
+const QueryBuilder = require('../utils/queryBuilder');
 const AppError = require('../utils/appError');
 
+// Obtengo todos los vehiculos con filtros, ordenacion, paginacion y limitacion de campos
 exports.getAllCars = async (req, res) => {
     try {
-        const cars = await Car.find(); // Busco todos los coches
-        res.status(200).json(cars);
+        const queryBuilder = new QueryBuilder(Car.find(), req.query)
+            .filter()
+            .sort()
+            .limitFields()
+            .paginate(5);
+
+        const cars = await queryBuilder.query; // Busco todos los coches
+
+        res.status(200).json({
+            status: 'success',
+            results: cars.length,
+            data: {
+                cars
+            }
+        });
+
     } catch (error) {
-        res.status(500).json({message: error.message});
+        next(new AppError('Error al obtener los vehículos', 500));
     }
 }
 
-
+// Obtengo un vehiculo por su ID
 exports.getCar = async (req, res, next) => {
     try {
         const car = await Car.findById(req.params.id); // Busco el coche por ID
@@ -18,15 +34,21 @@ exports.getCar = async (req, res, next) => {
         if (!car) {
             return next(new AppError('No existe ningun coche con ese ID', 404));
         }
-        res.status(200).json(car);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                car
+            }
+        });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        next(new AppError('Error al obtener el vehículo', 500));
     }
 }
 
 
-
-exports.createCar = async (req, res) => {
+// Creo un nuevo vehiculo
+exports.createCar = async (req, res, next) => {
     try {
         const newCar = await Car.create(req.body);
 
@@ -34,34 +56,36 @@ exports.createCar = async (req, res) => {
             status: 'success',
             message: 'Coche creado',
             data: {
-            car: newCar
+                car: newCar
             }
         });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        next(new AppError('Error al crear el vehículo', 500));
     }
 }
 
 
+// Actualizo un vehiculo por su ID
 exports.updateCar = async (req, res, next) => {
     try {
         const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
-          });
+        });
     
-            if (!car) {
-                return next(new AppError('No existe ningun coche con ese ID', 404));
-            }
+        if (!car) {
+            return next(new AppError('No existe ningun coche con ese ID', 404));
+        }
     
-            res.status(200).json({
-                status: 'success',
-                data: {
+        res.status(200).json({
+            status: 'success',
+            data: {
                 car
-                }
-            });
+            }
+        });
+
     } catch (error) {
-        res.status(500).json({message: error.message});
+        next(new AppError('Error al actualizar el vehículo', 500));
     }
 }
 
@@ -78,8 +102,9 @@ exports.deleteCar = async (req, res, next) => {
             status: 'success',
             data: null
         });
+
     } catch (error) {
-        res.status(500).json({message: error.message});
+        next(new AppError('Error al eliminar el vehículo', 500));
     }
 }
 
