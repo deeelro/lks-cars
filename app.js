@@ -1,7 +1,8 @@
 // app.js
 const express = require('express');
 const carRouter = require('./routes/carRoutes');
-const errorMiddleware = require('./utils/errorMiddleware');
+// const errorMiddleware = require('./utils/errorMiddleware');
+const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.all('*', (req, res, next) => {
     next(new AppError(`No se encontró la ruta ${req.originalUrl}`, 404));
 });
 
-app.use(errorMiddleware);
+app.use(globalErrorHandler);
 
 
 module.exports = app; // Exportamos la app sin iniciar el servidor
