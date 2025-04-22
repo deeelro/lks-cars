@@ -20,4 +20,4 @@ app.all('*', (req, res, next) => {
 app.use(errorMiddleware);
 
 
-module.exports = app; // ⬅️ Exportamos la app sin iniciar el servidor
+module.exports = app; // Exportamos la app sin iniciar el servidor
