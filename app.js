@@ -1,6 +1,7 @@
 // app.js
 const express = require('express');
 const carRouter = require('./routes/carRoutes');
+const userRouter = require('./routes/userRoutes');
 // const errorMiddleware = require('./utils/errorMiddleware');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -11,6 +12,8 @@ app.use(express.json()); // Middleware para peticiones POST y PUT
 
 // RUTAS
 app.use('/api/v1/cars', carRouter);
+app.use('/api/v1/users', userRouter);
+
 
 // Gestiono rutas inexistentes
 app.all('*', (req, res, next) => {
