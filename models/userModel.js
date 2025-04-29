@@ -54,8 +54,15 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+
+///////////////////////////////////////////
+/////////////// MIDDLEWARES ///////////////
+///////////////////////////////////////////
+// Si se crea un nuevo usuario, se hashea la contraseña
+// Si se modifica la contraseña, se hashea y se guarda
+// y se elimina el campo passwordConfirm
 userSchema.pre('save', async function(next) {
-  // solo se ejecuta si la contraseña fue modificada
+  // solo se ejecuta si la contraseña se modifica
   if (!this.isModified('password')) return next();
 
   // hashea la contraseña con un coste de 12
@@ -66,6 +73,7 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+// Si se modifica la contraseña, se actualiza la fecha de cambio
 userSchema.pre('save', function(next) {
   if (!this.isModified('password') || this.isNew) return next();
 
@@ -73,18 +81,27 @@ userSchema.pre('save', function(next) {
   next();
 });
 
+// Elimina los usuarios que no están activos de las consultas
+// (no se eliminan de la base de datos, se ocultan)
 userSchema.pre(/^find/, function(next) {
   // apunta a la query actual
   this.find({ active: { $ne: false } });
   next();
 });
 
+
+/////////////////////////////////////////
+///////////////// METODOS ///////////////
+/////////////////////////////////////////
+// Compara la contraseña introducida por el usuario con la contraseña hasheada en la BD
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
 ) {
+  // bcrypt.compare --> desencripta la contraseña de la BD para compararla con la introducida por el usuario
   return await bcrypt.compare(candidatePassword, userPassword);
 };
+
 
 userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {
