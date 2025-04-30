@@ -1,11 +1,14 @@
 // app.js
 const express = require('express');
+const cors = require('cors');
 const carRouter = require('./routes/carRoutes');
 const userRouter = require('./routes/userRoutes');
 // const errorMiddleware = require('./utils/errorMiddleware');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
+
+app.use(cors()); // Middleware para permitir peticiones de otros dominios
 
 // MIDDLEWARES
 app.use(express.json()); // Middleware para peticiones POST y PUT
