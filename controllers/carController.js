@@ -2,8 +2,16 @@ const Car = require('../models/carModel');
 const QueryBuilder = require('../utils/queryBuilder');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./controllerFactory');
 
-// Obtengo todos los vehiculos con filtros, ordenacion, paginacion y limitacion de campos
+exports.getAllCars = factory.getAll(Car); 
+exports.getCar = factory.getOne(Car); 
+exports.createCar = factory.createOne(Car);
+exports.updateCar = factory.updateOne(Car);
+exports.deleteCar = factory.deleteOne(Car);
+
+
+/* 
 exports.getAllCars = catchAsync(async (req, res) => {
     const queryBuilder = new QueryBuilder(Car.find(), req.query)
             .filter()
@@ -22,7 +30,7 @@ exports.getAllCars = catchAsync(async (req, res) => {
     });
 });
 
-// Obtengo un vehiculo por su ID
+
 exports.getCar = catchAsync(async (req, res, next) => {
     const car = await Car.findById(req.params.id); // Busco el coche por ID
 
@@ -39,7 +47,6 @@ exports.getCar = catchAsync(async (req, res, next) => {
 });
 
 
-// Creo un nuevo vehiculo
 exports.createCar = catchAsync(async (req, res, next) => {
     const newCar = await Car.create(req.body);
 
@@ -53,7 +60,6 @@ exports.createCar = catchAsync(async (req, res, next) => {
 });
 
 
-// Actualizo un vehiculo por su ID
 exports.updateCar = catchAsync(async (req, res, next) => {
     const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -84,5 +90,6 @@ exports.deleteCar = catchAsync(async (req, res, next) => {
         status: 'success',
         data: null
     });
-});
+}); 
+*/
 
