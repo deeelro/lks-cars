@@ -4,26 +4,22 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-// Rutas de autenticación
+// RUTAS PUBLICAS
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+// RUTAS PROTEGIDAS PARA USUARIOS REGISTRADOS
+router.use(authController.protect); // el usuario tiene que estar autenticado para acceder a las siguientes rutas
+
+router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', authController.protect, userController.getMe, userController.getUser);
 router.patch('/updateMe', authController.protect, userController.updateMe);
 router.delete('/deleteMe', authController.protect, userController.deleteMe);
 
-// Añado lo siguiente para que el middleware de protección y el de restricción de acceso se apliquen a todas las rutas siguientes
-// (es decir, a las rutas de administración)
-router.use(authController.protect); // el usuario tiene que estar autenticado para acceder a las siguientes rutas
-router.use(authController.restrictTo('admin')); // ademas debe ser admin
+// RUTAS DE ADMINISTRACION (PROTEGIDAS Y RESTRINGIDAS A ADMINISTRADORES)
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
