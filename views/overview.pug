@@ -1,0 +1,33 @@
+extends base
+
+block content 
+    main.contenedor-principal 
+        .contenedor-tarjetas 
+            each car in cars 
+                .tarjeta 
+                    .tarjeta__encabezado 
+                        .tarjeta__imagen 
+                            .tarjeta__imagen-overlay &nbsp;
+                            img.tarjeta__imagen-img(src=`img/cars/${car.imageCover || 'default.jpg'}`, alt=`${car.brand} ${car.model}`)
+                        h3.encabezado-terciario 
+                            span= car.brand 
+                            span= car.model
+                        
+                    .tarjeta__detalles
+                        .tarjeta__dato 
+                            svg.tarjeta__icono 
+                                use(xlink:href='img/icons.svg#icon-calendar')
+                            span= car.year
+                        .tarjeta__dato
+                            svg.tarjeta__icono
+                                use(xlink:href='img/icons.svg#icon-fuel')
+                            span= car.fuelType
+                        .tarjeta__dato
+                            svg.tarjeta__icono
+                                use(xlink:href='img/icons.svg#icon-engine')
+                            span= `${car.enginePower} CV`
+
+                    .tarjeta__pie 
+                        p
+                            span.tarjeta__pie-valor= `${car.price}€`
+                        a.boton.boton--verde.boton--pequeno(href=`/car/${car._id}`) Ver detalles
