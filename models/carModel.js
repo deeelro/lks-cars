@@ -29,6 +29,33 @@ const carSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    reserved: { // Nuevo campo para indicar si está reservado
+        type: Boolean,
+        default: false
+    },
+    images: [String], // Galería de imágenes
+    fuelType: {
+        type: String,
+        enum: ['Gasolina', 'Diésel', 'Eléctrico', 'Híbrido'],
+        required: true
+    },
+    transmission: {
+        type: String,
+        enum: ['Manual', 'Automática'],
+        required: true
+    },
+    doors: {
+        type: Number,
+        required: true
+    },
+    fuelConsumption: {
+        type: Number,
+        required: true
+    },
+    enginePower: {
+        type: Number,
+        required: true
+    },
 })
 
 const Car = mongoose.model('Car', carSchema)

@@ -1,0 +1,55 @@
+extends base
+
+block content
+    main.contenedor-principal
+        .coche-detalle
+            .coche-detalle__imagen
+                img(src=`/img/cars/${car.imageCover || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
+            
+            .coche-detalle__info
+                h1= `${car.brand} ${car.model}`
+                p.coche-detalle__descripcion= car.description
+                ul.coche-detalle__datos
+                    li
+                        strong Año: 
+                        span= car.year
+                    li
+                        strong Color: 
+                        span= car.color
+                    li
+                        strong Precio: 
+                        span= `${car.price} €`
+                    li
+                        strong Kilometraje: 
+                        span= `${car.mileage} km`
+                    li
+                        strong Combustible: 
+                        span= car.fuelType
+                    li
+                        strong Transmisión: 
+                        span= car.transmission
+                    li
+                        strong Puertas: 
+                        span= car.doors
+                    li
+                        strong Consumo: 
+                        span= `${car.fuelConsumption} L/100km`
+                    li
+                        strong Potencia: 
+                        span= `${car.enginePower} CV`
+                    li
+                        strong Reservado: 
+                        span= car.reserved ? 'Sí' : 'No'
+
+            .coche-detalle__galeria
+                if car.images && car.images.length > 0
+                    h2 Galería de imágenes
+                    .galeria
+                        each image in car.images
+                            img(src=`/img/cars/${image}`, alt=`Imagen adicional de ${car.brand} ${car.model}`)
+
+            .coche-detalle__acciones
+                if !car.reserved
+                    button.boton.boton--verde Reservar
+                else
+                    p.coche-detalle__reservado Este coche ya está reservado.
