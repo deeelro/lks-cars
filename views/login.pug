@@ -1,17 +1,17 @@
 extends base 
 
 block content 
-    main.main 
-        .login-form 
-            h2.heading-secondary.ma-bt-lg Login 
+    main.vista-login 
+        .form-login 
+            h2.titulo-form-login Login 
             form.form
-                .form__group  
-                    label.form__label(for='email') Email 
-                    input#email.form__input(type='email', placeholder='you@example.com', required)
-                .form__group.ma-bt-md
-                    label.form__label(for='password') Password 
-                    input#password.form__input(type='password', placeholder='********', required, minLength='8')
-                .form__group  
-                    button.btn.btn--green Iniciar sesión
+                div 
+                    label.form-label(for='email') Email 
+                    input#email.form-input(type='email', placeholder='you@example.com', required)
+                div
+                    label.form-label(for='password') Password 
+                    input#password.form-input(type='password', placeholder='********', required, minLength='8')
+                div  
+                    button.btn.btn-rojo Iniciar sesión
 
                     

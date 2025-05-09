@@ -1,7 +1,4 @@
-/******************************/
-/********** ENCABEZADO ********/
-/******************************/
-
+/* #region ENCABEZADO */
 .encabezado {
     background-color: #333;
     color: #fff;
@@ -65,12 +62,11 @@
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
 
 }
+/* #endregion ENCABEZADO */
 
-/******************************************/
-/************* VISTA PERFRIL **************/
-/******************************************/
+/* #region VISTA PERFIL */
 
-.main {
+.vista-perfil {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
@@ -250,9 +246,9 @@ li {
     margin-bottom: 10px; /* Opcional: agrega espacio entre los elementos de la lista */
 }
 
-/******************************************/
-/********** CONTENIDO PRINCIPAL ***********/
-/******************************************/
+/* #endregion VISTA PERFIL */
+
+/* #region OVERVIEW */
 
 .contenedor-tarjetas {
     display: flex;
@@ -372,10 +368,9 @@ li {
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;
 }
+/* #endregion OVERVIEW */
 
-/******************************/
-/********* PIE DE PÁGINA ******/
-/******************************/
+/* #region PIE DE PAGINA */
 
 .pie {
     background-color: #333;
@@ -420,14 +415,9 @@ li {
     color: #bbb;
 }
 
+/* #endregion PIE DE PAGINA */
 
-
-
-
-/******************************/
-/********* DETALLE COCHE ******/
-/******************************/
-
+/* #region DETALLE COCHE */
 .coche-detalle {
     display: flex;
     flex-direction: column;
@@ -467,16 +457,9 @@ li {
     font-weight: bold;
 }
 
+/* #endregion DETALLE COCHE */
 
-
-
-
-
-
-/**************************************/
-/********* ADMINISTRACION COCHES ******/
-/**************************************/
-
+/* #region ADMINISTRACION COCHES */
 .admin__formulario {
     margin-bottom: 2rem;
 }
@@ -516,63 +499,163 @@ li {
 .boton--rojo:hover {
     background-color: #c82333;
 }
+/* #endregion ADMINISTRACION COCHES */
 
+/* #region VISTA LOGIN */
 
+/* Contenedor principal */
+.vista-login {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: calc(100vh - 80px); /* Resta la altura del header */
+    background-color: #f7f7f7; /* Fondo claro */
+    padding: 20px;
+}
 
-
-/**************************************/
-/********* INICIO DE SESION ***********/
-/**************************************/
-
-.login {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
+/* Contenedor del formulario */
+.form-login {
+    background-color: #fff; /* Fondo blanco */
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login h1 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
-}
-
-.form__grupo {
-    margin-bottom: 1rem;
-}
-
-.form__grupo label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #555;
-}
-
-.form__grupo input {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px;
     width: 100%;
-    padding: 0.5rem;
+}
+
+/* Título del formulario */
+.titulo-form-login {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-.boton--verde {
+.form-input:focus {
+    border-color: #ff0000; 
+    outline: none;  
+}
+
+/* Botón de inicio de sesión */
+.btn-rojo {
     display: block;
     width: 100%;
-    padding: 0.75rem;
-    background-color: #28a745;
-    color: #fff;
-    text-align: center;
-    font-size: 1rem;
+    padding: 10px;
+    font-size: 16px;
     font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #ff0000; /* Color rojo definido */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.boton--verde:hover {
-    background-color: #218838;
+.btn-rojo:hover {
+    background-color: rgb(144, 80, 80);
+    transform: translateY(-2px); /* Efecto de elevación */
 }
+
+/* #endregion VISTA LOGIN */
+
+/* #region ALERTAS */
+
+/* Estilo general para las alertas */
+.alert {
+    position: fixed; /* Fija la alerta en la ventana del navegador */
+    top: 20px; /* Espacio desde la parte superior */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta el centro horizontal */
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out; /* Animación de entrada */
+}
+
+/* Estilo para alertas de éxito */
+.alert--success {
+    background-color: #fff;
+    border: 2px solid #28a745;
+}
+
+/* Estilo para alertas de error */
+.alert--error {
+    background-color: #fff; 
+    border: 2px solid #dc3545;
+}
+
+/* Animación de entrada */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* #endregion ALERTAS */
+
+/* #region ERROR */
+
+/* Contenedor principal */
+.main {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: #f7f7f7; /* Fondo claro */
+    padding: 20px;
+}
+
+/* Contenedor del mensaje de error */
+.error {
+    text-align: center;
+    background-color: #fff; /* Fondo blanco */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Título del error */
+.heading-secondary--error {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #dc3545; /* Rojo para destacar el error */
+    margin-bottom: 20px;
+}
+
+/* Mensaje del error */
+.error__message {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* #endregion ERROR */
+
+
