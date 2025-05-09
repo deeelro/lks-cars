@@ -36,7 +36,7 @@ const carSchema = new mongoose.Schema({
     images: [String], // Galería de imágenes
     fuelType: {
         type: String,
-        enum: ['Gasolina', 'Diésel', 'Eléctrico', 'Híbrido'],
+        enum: ['Gasolina', 'Diesel', 'Elctrico', 'Hibrido'],
         required: true
     },
     transmission: {

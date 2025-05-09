@@ -22,34 +22,60 @@ const handleValidationErrorDB = err => {
     return new AppError(message, 400);
 };
 
-// Creo un error para manejar errores de desarrollo
-// Este tiene detalles del error
-const sendErrorDev = (err, res) => {
-    res.status(err.statusCode).json({
-        status: err.status,
-        error: err,
-        message: err.message,
-        stack: err.stack
+// MANEJO DE ERRORES EN DESARROLLO
+const sendErrorDev = (err, req, res) => {
+    // ERROR DE LA API
+    if (req.originalUrl.startsWith('/api')) {
+        return res.status(err.statusCode).json({
+            status: err.status,
+            error: err,
+            message: err.message,
+            stack: err.stack
+        });
+    }
+    
+    // ERROR EN EL RENDERIZADO
+    console.error('ERROR', err);
+    return res.status(err.statusCode).render('error', {
+        title: 'Algo salió mal!',
+        msg: err.message
     });
 };
   
-// Creo un error para manejar errores de produccion
-// Este no tiene detalles del error
-const sendErrorProd = (err, res) => {
-if (err.isOperational) {
-    res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message
-    });
+// MANEJO DE ERRORES EN PRODUCCION
+const sendErrorProd = (err, req, res) => {
+// ERROR DE LA API
+if (req.originalUrl.startsWith('/api')) {
+    // OPERACIONAL
+    if (err.isOperational) {
+        res.status(err.statusCode).json({
+            status: err.status,
+            message: err.message
+        });
+    }
 
-} else {
+    // NO OPERACIONAL
     console.error('ERROR', err);
-
     res.status(500).json({
-    status: 'error',
-    message: 'Algo salió mal! Inténtalo de nuevo más tarde.'
+        status: 'error',
+        message: 'Algo salió mal! Inténtalo de nuevo más tarde.'
     });
 }
+// ERROR EN EL RENDERIZADO
+    // OPERACIONAL
+    if (err.isOperational) {
+        return res.status(err.statusCode).render('error', {
+            title: 'Algo salió mal!',
+            msg: err.message
+        });
+    }
+
+    // NO OPERACIONAL
+    console.error('ERROR', err);
+    return res.status(err.statusCode).render('error', {
+        title: 'Algo salió mal!',
+        msg: 'Por favor, intentalo de nuevo más tarde.'
+    });
 };
 
 
@@ -59,15 +85,16 @@ err.statusCode = err.statusCode || 500;
 err.status = err.status || 'error';
 
 if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
 } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err }; // copio el error para no modificar el original
+    error.message = err.message; // copio el mensaje del error original
 
     // Uso la copia del error para manejar errores de BD
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
 
-    sendErrorProd(err, res);
+    sendErrorProd(error, req, res);
 }
 };

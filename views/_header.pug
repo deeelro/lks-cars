@@ -3,10 +3,13 @@ header.encabezado
         a.navegacion__enlace(href='/') Todos los vehículos
     .encabezado__logo 
         img(src='/img/logo.png', alt='Logo de la empresa LKS Cars')
-    nav.navegacion.navegacion--usuario
-        //a.navegacion__enlace(href='#') Mis vehículos favoritos
-        //a.navegacion__enlace(href='#')
-        //    img.navegacion__imagen-usuario(src='img/user.png', alt='Imagen de usuario')
-        //    span Ivan 
-        button.navegacion__enlace Iniciar sesión
-        button.navegacion__boton--principal Registrarse
+    nav.navegacion.nombre-usuario-header
+        if user 
+            a.navegacion__enlace.btn-logout Cerrar sesión
+            a.navegacion__enlace(href='/me') 
+                img.imagen-usuario-header(src=`/img/users/${user.photo ? user.photo : 'imagen-defecto.jpg'}`, alt='Imagen de usuario')
+                span= user.name.split(' ')[0]
+        else
+            a.navegacion__enlace(href='/login') Iniciar sesión
+            a.navegacion__boton--principal(href='/signup') Registrarse
+

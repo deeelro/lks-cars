@@ -50,12 +50,204 @@
     transform: translateY(-2px);
 }
 
-.navegacion__imagen-usuario {
+.imagen-usuario-header {
+    margin-right: 10px; /* Espacio entre la imagen y el nombre */
     width: 30px;
     height: 30px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #fff;
+    vertical-align: middle; /* Alinea el icono con el texto */
+
+}
+
+.nombre-usuario-header span {
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+
+}
+
+/******************************************/
+/************* VISTA PERFRIL **************/
+/******************************************/
+
+.main {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* MENU DE NAVEGACION */
+.menu-usuario {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.menu-usuario ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-usuario li {
+    margin-bottom: 10px;
+}
+
+.menu-usuario a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-usuario a:hover {
+    background-color: #f0f0f0;
+}
+
+.menu-usuario .menu-activo a {
+    background-color: #ff0000;
+    color: #fff;
+}
+
+.menu-usuario img.icono-perfil {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+/* Admin navigation */
+.menu-admin {
+    margin-top: 20px;
+}
+
+.titulo-menu-admin {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Content area */
+.contenido-vista-usuario {
+    flex: 3;
+}
+
+.contenedor-formularios {
+    margin-bottom: 30px;
+}
+
+
+/* Forms */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form__input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form__input:focus {
+    border-color: #ff0000;
+    outline: none;
+}
+
+/* Photo upload */
+.form__photo-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.form__user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn--green {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+}
+
+.btn--green:hover {
+    background-color: rgb(144, 80, 80);
+}
+
+.btn--save-password {
+    margin-top: 10px;
+}
+
+.btn-text {
+    font-size: 14px;
+    color: rgb(144, 80, 80);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn-text:hover {
+    color: #ff0000;
+}
+
+/* Line separator */
+.line {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+/* Tamaño y alineacion de los iconos vista perfil */
+.icono-perfil {
+    width: 24px; /* Ajusta el ancho del icono */
+    height: 24px; /* Ajusta la altura del icono */
+    margin-right: 8px; /* Espacio entre el icono y el texto */
+    vertical-align: middle; /* Alinea el icono con el texto */
+}
+ul {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding: 0; /* Opcional: elimina el padding por defecto */
+    margin: 0; /* Opcional: elimina el margen por defecto */
+}
+li {
+    margin-bottom: 10px; /* Opcional: agrega espacio entre los elementos de la lista */
 }
 
 /******************************************/
@@ -273,4 +465,114 @@
 .coche-detalle__reservado {
     color: red;
     font-weight: bold;
+}
+
+
+
+
+
+
+
+/**************************************/
+/********* ADMINISTRACION COCHES ******/
+/**************************************/
+
+.admin__formulario {
+    margin-bottom: 2rem;
+}
+
+.admin__lista {
+    margin-top: 2rem;
+}
+
+.admin__vehiculo {
+    background: #f9f9f9;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin__acciones {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.boton--amarillo {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.boton--amarillo:hover {
+    background-color: #e0a800;
+}
+
+.boton--rojo {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.boton--rojo:hover {
+    background-color: #c82333;
+}
+
+
+
+
+/**************************************/
+/********* INICIO DE SESION ***********/
+/**************************************/
+
+.login {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.form__grupo {
+    margin-bottom: 1rem;
+}
+
+.form__grupo label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.form__grupo input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.boton--verde {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #28a745;
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton--verde:hover {
+    background-color: #218838;
 }

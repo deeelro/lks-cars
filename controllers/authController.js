@@ -87,6 +87,48 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 
+// Comprueba si el usuario esta logueado para mostrarle vistas diferentes
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) { // si hay una cookie jwt
+    try{
+      // Se verifica que el token es valido con el JWT_SECRET con el que fue creado...
+      const decoded = await promisify(jwt.verify) (
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+      
+      // Si existe el usuario ...
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+
+      // Si el usuario cambio la contraseña después de que se emitió el token...
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+      
+      // HAY UN USUARIO LOGUEADO
+      // se guarda el usuario en locals para usarlo en las vistas
+      // (locals es un objeto que se pasa a las vistas)
+      res.locals.user = currentUser;
+      return next();
+    } catch(err) {
+      return next();
+    }
+  }
+  next();
+};
+
+
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'tokenfalso', { // le paso un token falso para que se borre la cookie de sesion
+    expires: new Date(Date.now() + 10 * 1000), // expira en 10 segundos
+    httpOnly: true 
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 // PROTEGE RUTAS
 exports.protect = catchAsync(async (req, res, next) => {
   // Revisa si hay token en cabecera Authorization: Bearer <token>
@@ -96,6 +138,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt && req.cookies.jwt !== 'tokenfalso') {
+      token = req.cookies.jwt;
   }
 
   // Si no hay, significa que no está autenticado

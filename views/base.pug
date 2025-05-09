@@ -6,7 +6,7 @@ html
         link(rel='stylesheet' href='/css/style.css')
         link(rel='shortcut icon' type='image/png' href='/img/logo.png')
         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
-        title LKS Cars  
+        title= title || 'LKS Cars'  
 
     body
         include _header.pug
@@ -16,3 +16,8 @@ html
             h1 Este es el base
         
         include _footer.pug
+
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js')
+        script(type='module' src='/js/login.js')
+        script(type='module' src='/js/alerts.js')
+        script(type='module' src='/js/updateSettings.js')

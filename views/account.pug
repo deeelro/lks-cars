@@ -1,0 +1,63 @@
+extends base 
+
+mixin navItem(link, text, icon, active)
+    //- Se le da clase menu-activo al elemento de la lista con el campo active: true
+    li(class=`${active ? 'menu-activo' : ''}`) 
+        a(href=`${link}`)
+            img.icono-perfil(src=`/img/icons/${icon}.png`, alt=`Icono de ${text}`)
+            //-svg  
+                use(xlink:href=`img/icons.svg#${icon}`)
+            | #{text}
+
+block content 
+    main.main 
+        .vista-usuario 
+            nav.menu-usuario 
+                ul 
+                    +navItem('/', 'Menu principal', 'menu-principal', true)
+                    +navItem('/account', 'Favoritos', 'favorito')
+                    +navItem('/logout', 'Reservas', 'reservado')
+                    +navItem('/cars', 'Creditos', 'derechos-autor')
+                
+                if user.role === 'admin'
+                    .menu-admin 
+                        h5.titulo-menu-admin Administracion 
+                        ul.menu-lateral 
+                            +navItem('#', 'Administrar usuarios', 'admin-usuarios')
+                            +navItem('#', 'Administrar vehiculos', 'coche-deportivo')
+
+            .contenido-vista-usuario
+                .contenedor-formularios
+                h2 Your account settings
+                
+                
+                //- WITH API
+                form.form.form-user-data
+                    .form__group
+                        label.form__label(for='name') Name
+                        input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+                    .form__group
+                        label.form__label(for='email') Email address
+                        input#email.form__input(type='email', value=`${user.email}`, required, name='email')
+                    .form__group.form__photo-upload
+                        img.form__user-photo(src=`/img/users/${user.photo ? user.photo : 'imagen-defecto.jpg'}`, alt='User photo')                        
+                        a.btn-text(href='') Choose new photo
+                    .form__group.right
+                        button.btn.btn--small.btn--green Save settings
+                    
+                .line &nbsp;
+                
+                .user-view__form-container
+                h2 Password change
+                    form.form.form-user-password
+                        .form__group
+                            label.form__label(for='password-current') Current password
+                            input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group
+                            label.form__label(for='password') New password
+                            input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group.ma-bt-lg
+                            label.form__label(for='password-confirm') Confirm password
+                            input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group.right
+                            button.btn.btn--small.btn--green.btn--save-password Cambiar contraseña
