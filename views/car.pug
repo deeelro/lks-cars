@@ -10,8 +10,10 @@ block content
                 if !car.reserved
                     button.boton.boton--verde(data-id=`${car._id}`) Reservar
                 else
-                    p.coche-detalle__reservado Este coche ya está reservado.
-            
+                    if isReservedByCurrentUser
+                        button.boton.boton--rojo(data-id=`${car._id}`) Desreservar
+                    else
+                        span.coche-detalle__reservado El coche está reservado
             .coche-detalle__info
                 h1= `${car.brand} ${car.model}`
                 p.coche-detalle__descripcion= car.description

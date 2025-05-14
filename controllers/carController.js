@@ -105,6 +105,35 @@ exports.reserveCar = catchAsync(async (req, res, next) => {
 });
 
 
+exports.unreserveCar = catchAsync(async (req, res, next) => {
+    const car = await Car.findById(req.params.id);
+
+    if (!car) {
+        return next(new AppError('No existe ningún coche con ese ID', 404));
+    }
+
+    if (!car.reserved) {
+        return next(new AppError('Este coche no está reservado', 400));
+    }
+
+    // Verifica si el usuario actual es el que reservó el coche
+    if (!car.reservedBy || car.reservedBy.toString() !== req.user.id.toString()) {
+        return next(new AppError('No tienes permiso para desreservar este coche', 403));
+    }
+
+    car.reserved = false;
+    car.reservedBy = null; // Elimina la referencia al usuario que reservó el coche
+    await car.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            car
+        }
+    });
+});
+
+
 
 
 

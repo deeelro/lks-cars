@@ -12,16 +12,22 @@ exports.getOverview = catchAsync (async (req, res) => {
 });
 
 exports.getCar = catchAsync(async (req, res, next) => {
-    const car = await Car.findById(req.params.id); // Busca el coche por ID
+    const car = await Car.findById(req.params.id).populate({
+        path: 'reservedBy',
+        select: 'id name email'
+    });
 
-    // Si no existe el vehiculo, lanza un error
     if (!car) {
         return next(new AppError('No se encontró el coche con ese ID', 404));
     }
-    
+
+    // Verifica si el usuario actual es el que reservó el coche
+    const isReservedByCurrentUser = car.reservedBy && req.user && car.reservedBy._id.toString() === req.user.id;
+
     res.status(200).render('car', {
         title: `${car.brand} ${car.model}`,
-        car
+        car,
+        isReservedByCurrentUser // Pasa esta información a la vista
     });
 });
 

@@ -32,4 +32,7 @@ carRouter
 carRouter
     .patch('/:id/reserve', authController.protect, carController.reserveCar);
 
+carRouter
+    .patch('/:id/unreserve', authController.protect, carController.unreserveCar);
+
 module.exports = carRouter;
