@@ -49,3 +49,16 @@ exports.addCar = (req, res) => {
 }
 
 
+
+exports.getManageCars = catchAsync(async (req, res, next) => {
+    const cars = await Car.find().populate({
+        path: 'reservedBy',
+        select: 'name email'
+    })
+
+    res.status(200).render('manageCars', {
+        title: 'Administrar Vehículos',
+        cars, // Pasa los vehículos a la vista
+        user: req.user // Pasa el usuario a la vista
+    });
+});

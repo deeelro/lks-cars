@@ -60,6 +60,10 @@ const carSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    reservedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 })
 
 const Car = mongoose.model('Car', carSchema)

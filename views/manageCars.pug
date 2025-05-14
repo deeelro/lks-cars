@@ -1,0 +1,33 @@
+extends base
+
+block content
+    main.vista-admin-vehiculos
+        h2.titulo-vista Administrar Vehículos
+
+        if cars.length > 0
+            table.tabla-vehiculos
+                thead
+                    tr
+                        th Marca
+                        th Modelo
+                        th Año
+                        th Precio (€)
+                        th Reservado
+                        th Acciones
+                tbody
+                    each car in cars
+                        tr
+                            td= car.brand
+                            td= car.model
+                            td= car.year
+                            td= `${car.price} €`
+                            td= car.reserved ? 'Sí' : 'No'
+                            td 
+                                if car.reservedBy 
+                                    span= `${car.reservedBy.name} (${car.reservedBy.email})`
+                                else
+                                    span No reservado
+                            td
+                                button.btn.btn--small.btn--rojo(data-id=`${car._id}`) Eliminar
+        else
+            p No hay vehículos disponibles en la base de datos.
