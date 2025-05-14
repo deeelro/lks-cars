@@ -81,6 +81,30 @@ exports.createCar = catchAsync(async (req, res, next) => {
 });
 
 
+exports.reserveCar = catchAsync(async (req, res, next) => {
+    const car = await Car.findById(req.params.id);
+
+    if (!car) {
+        return next(new AppError('No existe ningún coche con ese ID', 404));
+    }
+
+    if (car.reserved) {
+        return next(new AppError('Este coche ya está reservado', 400));
+    }
+
+    car.reserved = true;
+    car.reservedBy = req.user.id; // Asigna el ID del usuario logueado
+    await car.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            car
+        }
+    });
+});
+
+
 
 
 

@@ -8,7 +8,7 @@ block content
                 
             .coche-detalle__acciones
                 if !car.reserved
-                    button.boton.boton--verde Reservar
+                    button.boton.boton--verde(data-id=`${car._id}`) Reservar
                 else
                     p.coche-detalle__reservado Este coche ya está reservado.
             

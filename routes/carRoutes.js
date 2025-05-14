@@ -29,4 +29,7 @@ carRouter
         carController.deleteCar
     );
 
+carRouter
+    .patch('/:id/reserve', authController.protect, carController.reserveCar);
+
 module.exports = carRouter;

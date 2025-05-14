@@ -9,7 +9,8 @@ router.get('/car/:id', authController.isLoggedIn, authController.protect, viewsC
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 router.get('/me', authController.protect, viewsController.getAccount);
 
-// Ruta para añadir vehiculos
+// Rutas de la administracion de vehiculos
 router.get('/add-car', authController.protect, authController.restrictTo('admin'), viewsController.addCar);
+router.get('/manage-cars', authController.protect, authController.restrictTo('admin'), viewsController.getManageCars);
 
 module.exports = router;
