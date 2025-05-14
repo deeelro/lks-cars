@@ -41,4 +41,11 @@ exports.getAccount = (req, res) => {
 }
 
 
+exports.addCar = (req, res) => {
+    res.status(200).render('addCar', {
+        title: 'Añadir vehiculo',
+        user: req.user // Se pasa el usuario a la vista
+    });
+}
+
 

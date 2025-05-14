@@ -4,7 +4,13 @@ block content
     main.contenedor-principal
         .coche-detalle
             .coche-detalle__imagen
-                img(src=`/img/cars/${car.imageCover || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
+                img(src=`/img/cars/${car.coverImage || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
+                
+            .coche-detalle__acciones
+                if !car.reserved
+                    button.boton.boton--verde Reservar
+                else
+                    p.coche-detalle__reservado Este coche ya está reservado.
             
             .coche-detalle__info
                 h1= `${car.brand} ${car.model}`
@@ -48,8 +54,3 @@ block content
                         each image in car.images
                             img(src=`/img/cars/${image}`, alt=`Imagen adicional de ${car.brand} ${car.model}`)
 
-            .coche-detalle__acciones
-                if !car.reserved
-                    button.boton.boton--verde Reservar
-                else
-                    p.coche-detalle__reservado Este coche ya está reservado.

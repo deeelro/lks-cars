@@ -15,6 +15,8 @@ const updateSettings = async (data, type) => {
 
         if (res.data.status === 'success') { // Si la respuesta es exitosa
             showAlert('success', 'Datos actualizados correctamente'); // Muestra un mensaje de éxito
+            location.reload(); // <-- Esta línea fuerza la recarga de la página
+
         }
     } catch (err) {
         showAlert('error', err.response.data.message); // Muestra un mensaje de error
@@ -27,9 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userDataForm) {
         userDataForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.querySelector('#name').value; // Obtiene el nombre
-            const email = document.querySelector('#email').value; // Obtiene el nombre
-            updateSettings({ name, email}, 'data'); // Llama a la función para actualizar los datos
+            const form = new FormData(); // Crea un nuevo objeto FormData
+            form.append('name', document.querySelector('#name').value); // Añade el nombre al objeto FormData
+            form.append('email', document.querySelector('#email').value); // Añade el email al objeto FormData
+            form.append('photo', document.querySelector('input[name="photo"]').files[0]); // Añade la foto al objeto FormData
+            console.log('Datos enviados:', form); // Muestra los datos enviados en la consola
+            updateSettings(form, 'data'); // Llama a la función para actualizar los datos
         })
     }
     if (userPasswordForm) {

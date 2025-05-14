@@ -1,7 +1,47 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./controllerFactory');
+
+const multerStorage = multer.memoryStorage(); // Almacena la imagen en memoria
+
+// Compruebo si el archivo es una imagen
+const multerFilter = (req, file, cb) => {
+  // 1) Check if the file is an image
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Por favor, sube una imagen valida', 400), false);
+  }
+};
+
+// Configuro la subida de archivos
+const upload = multer({ 
+  storage: multerStorage,
+  fileFilter: multerFilter 
+});
+
+exports.uploadUserPhoto = upload.single('photo');
+
+
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) {
+    return next(); // Si no hay foto, paso al siguiente middleware
+  }
+
+  // guardo en el cuerpo de la peticion el nuevo nombre de la imagen
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`; 
+
+  await sharp(req.file.buffer) // redimensiono la imagen 
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`); // guardo la imagen en el servidor
+    next();
+});
+
 
 // Filtra el body para solo actualizar SOLO los campos permitidos
 const filterObj = (obj, ...allowedFields) => {
@@ -35,6 +75,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   // Guardo en la constante el body filtrado para solo poder actualizar nombre y email
   const filteredBody = filterObj(req.body, 'name', 'email');
+  if (req.file) filteredBody.photo = req.file.filename; // Si hay una foto, la añado al objeto
 
   // Buscar el usuario por su ID y actualizarlo
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

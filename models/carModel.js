@@ -33,6 +33,10 @@ const carSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    coverImage: { // Imagen de portada
+        type: String,
+        required: true
+    },
     images: [String], // Galería de imágenes
     fuelType: {
         type: String,
