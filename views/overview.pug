@@ -8,7 +8,7 @@ block content
                     .tarjeta__encabezado 
                         .tarjeta__imagen 
                             .tarjeta__imagen-overlay &nbsp;
-                            img.tarjeta__imagen-img(src=`img/cars/${car.imageCover || 'default.jpg'}`, alt=`${car.brand} ${car.model}`)
+                            img.tarjeta__imagen-img(src=`img/cars/${car.coverImage || 'default.jpg'}`, alt=`${car.brand} ${car.model}`)
                         h3.encabezado-terciario 
                             span= car.brand 
                             span= car.model

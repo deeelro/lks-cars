@@ -1,8 +1,88 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Car = require('../models/carModel');
 const QueryBuilder = require('../utils/queryBuilder');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./controllerFactory');
+
+
+const multerStorage = multer.memoryStorage(); // Almacena la imagen en memoria
+
+// Compruebo si el archivo es una imagen
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {   // Comprobar si el archivo es una imagen
+    cb(null, true); // Si es una imagen, continuar
+  } else {
+    cb(new AppError('Por favor, sube una imagen valida', 400), false);
+  }
+};
+
+// Configuro la subida de archivos
+const upload = multer({ 
+  storage: multerStorage, // Almacena la imagen en memoria
+  fileFilter: multerFilter // Compruebo si el archivo es una imagen
+});
+
+// Middleware para subir imágenes
+exports.uploadCarImages = upload.fields([
+    { name: 'coverImage', maxCount: 1 }, // Solo una imagen de portada
+    { name: 'images', maxCount: 10 } // Hasta 10 imágenes adicionales
+]);
+
+
+// Middleware para redimensionar imágenes
+exports.resizeCarImages = catchAsync(async (req, res, next) => {
+    if (!req.files.coverImage) {
+        return next(new AppError('La imagen de portada es obligatoria', 400));
+    }
+
+    // Procesar la imagen de portada
+    req.body.coverImage = `car-${Date.now()}-cover.jpeg`;
+    await sharp(req.files.coverImage[0].buffer)
+        .resize(2000, 1333)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/cars/${req.body.coverImage}`);
+
+    // Procesar imágenes adicionales (si existen)
+    req.body.images = [];
+    if (req.files.images) {
+        await Promise.all(
+            req.files.images.map(async (file, i) => {
+                const filename = `car-${Date.now()}-${i + 1}.jpeg`;
+                await sharp(file.buffer)
+                    .resize(2000, 1333)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 90 })
+                    .toFile(`public/img/cars/${filename}`);
+                req.body.images.push(filename);
+            })
+        );
+    }
+
+    next();
+});
+
+
+exports.createCar = catchAsync(async (req, res, next) => {
+    const newCar = await Car.create({
+        ...req.body,
+        coverImage: req.body.coverImage,
+        images: req.body.images
+    });
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            car: newCar
+        }
+    });
+});
+
+
+
+
 
 exports.getAllCars = factory.getAll(Car); 
 exports.getCar = factory.getOne(Car); 

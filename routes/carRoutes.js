@@ -9,6 +9,8 @@ carRouter
     .post(
         authController.protect,
         authController.restrictTo('admin'),
+        carController.uploadCarImages,
+        carController.resizeCarImages,
         carController.createCar
     );
 
@@ -18,6 +20,8 @@ carRouter
     .patch(
         authController.protect,
         authController.restrictTo('admin'),
+        carController.uploadCarImages,
+        carController.resizeCarImages,
         carController.updateCar)
     .delete(
         authController.protect,

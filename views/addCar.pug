@@ -1,0 +1,74 @@
+extends base
+
+block content
+    main.vista-add-car
+        .contenedor-formulario
+            h2.titulo-formulario Añadir nuevo vehículo
+
+            form.form.form-add-car(method='POST', enctype='multipart/form-data', action='/api/v1/cars')
+                .form__group
+                    label.form__label(for='brand') Marca
+                    input#brand.form__input(type='text', name='brand', placeholder='Ejemplo: Toyota', required)
+
+                .form__group
+                    label.form__label(for='model') Modelo
+                    input#model.form__input(type='text', name='model', placeholder='Ejemplo: Corolla', required)
+
+                .form__group
+                    label.form__label(for='year') Año
+                    input#year.form__input(type='number', name='year', placeholder='Ejemplo: 2023', required)
+
+                .form__group
+                    label.form__label(for='color') Color
+                    input#color.form__input(type='text', name='color', placeholder='Ejemplo: Rojo', required)
+
+                .form__group
+                    label.form__label(for='price') Precio (€)
+                    input#price.form__input(type='number', name='price', placeholder='Ejemplo: 20000', required)
+
+                .form__group
+                    label.form__label(for='mileage') Kilometraje (km)
+                    input#mileage.form__input(type='number', name='mileage', placeholder='Ejemplo: 50000', required)
+
+                .form__group
+                    label.form__label(for='description') Descripción
+                    textarea#description.form__input(name='description', placeholder='Ejemplo: Coche en perfecto estado...', required)
+
+                .form__group
+                    label.form__label(for='fuelType') Tipo de combustible
+                    select#fuelType.form__input(name='fuelType', required)
+                        option(value='') Selecciona el tipo de combustible
+                        option(value='Gasolina') Gasolina
+                        option(value='Diesel') Diesel
+                        option(value='Elctrico') Eléctrico
+                        option(value='Hibrido') Híbrido
+
+                .form__group
+                    label.form__label(for='transmission') Transmisión
+                    select#transmission.form__input(name='transmission', required)
+                        option(value='') Selecciona la transmisión
+                        option(value='Manual') Manual
+                        option(value='Automática') Automática
+
+                .form__group
+                    label.form__label(for='doors') Número de puertas
+                    input#doors.form__input(type='number', name='doors', placeholder='Ejemplo: 4', required)
+
+                .form__group
+                    label.form__label(for='fuelConsumption') Consumo de combustible (L/100km)
+                    input#fuelConsumption.form__input(type='number', step='0.1', name='fuelConsumption', placeholder='Ejemplo: 5.5', required)
+
+                .form__group
+                    label.form__label(for='enginePower') Potencia del motor (CV)
+                    input#enginePower.form__input(type='number', name='enginePower', placeholder='Ejemplo: 150', required)
+
+                .form__group
+                    label.form__label(for='coverImage') Imagen de portada
+                    input#coverImage.form__upload(type='file', name='coverImage', accept='image/*', required)
+
+                .form__group
+                    label.form__label(for='images') Imágenes adicionales
+                    input#images.form__upload(type='file', name='images', accept='image/*', multiple)
+
+                .form__group.right
+                    button.btn.btn--small.btn--green Añadir vehículo
