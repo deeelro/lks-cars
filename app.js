@@ -8,6 +8,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const carRouter = require('./routes/carRoutes');
 const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const salesRouter = require('./routes/salesRoutes');
 // const errorMiddleware = require('./utils/errorMiddleware');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(cookieParser()); // Middleware para parsear cookies
 app.use('/', viewRouter);
 app.use('/api/v1/cars', carRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/sales', salesRouter);
 
 
 // Gestiono rutas inexistentes
