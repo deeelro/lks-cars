@@ -14,6 +14,9 @@ block content
                         button.boton.boton--rojo(data-id=`${car._id}`) Desreservar
                     else
                         span.coche-detalle__reservado El coche está reservado
+                
+                //- Boton de favoritos
+                button.boton.boton--amarillo(data-id=`${car._id}`) Añadir a favoritos
             .coche-detalle__info
                 h1= `${car.brand} ${car.model}`
                 p.coche-detalle__descripcion= car.description

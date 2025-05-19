@@ -1,6 +1,7 @@
 const multer = require('multer');
 const sharp = require('sharp');
 const User = require('./../models/userModel');
+const Car = require('./../models/carModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./controllerFactory');
@@ -100,6 +101,58 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     status: 'success',
     data: null
   });
+});
+
+
+exports.getFavorites = catchAsync(async (req, res, next) => {
+    // Obtén el usuario logueado y popula los favoritos
+    const user = await User.findById(req.user.id).populate({
+        path: 'favorites',
+        select: 'brand model year price coverImage'
+    });
+
+    if (!user) {
+        return next(new AppError('No se encontró el usuario', 404));
+    }
+
+    res.status(200).render('favorites', {
+        title: 'Tus favoritos',
+        favorites: user.favorites // Pasa los coches favoritos a la vista
+    });
+});
+
+exports.removeFavorite = catchAsync(async (req, res, next) => {
+    const user = await User.findByIdAndUpdate(
+        req.user.id,
+        { $pull: { favorites: req.params.carId } }, // Elimina el coche de favoritos
+        { new: true }
+    );
+
+    if (!user) {
+        return next(new AppError('No se encontró el usuario', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: null
+    });
+});
+
+exports.addFavorite = catchAsync(async (req, res, next) => {
+    const user = await User.findByIdAndUpdate(
+        req.user.id,
+        { $addToSet: { favorites: req.params.carId } }, // Añade el coche a favoritos si no está ya
+        { new: true }
+    );
+
+    if (!user) {
+        return next(new AppError('No se encontró el usuario', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: null
+    });
 });
 
 

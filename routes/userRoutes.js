@@ -18,6 +18,9 @@ router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);
 router.patch('/updateMe', userController.uploadUserPhoto, userController.resizeUserPhoto, userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
+router.get('/favorites', userController.getFavorites);
+router.patch('/removeFavorite/:carId', userController.removeFavorite);
+router.patch('/addFavorite/:carId', userController.addFavorite);
 
 // RUTAS DE ADMINISTRACION (PROTEGIDAS Y RESTRINGIDAS A ADMINISTRADORES)
 router.use(authController.restrictTo('admin'));

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const sendEmail = require('./../utils/email');
+const Email = require('./../utils/email');
 
 // Firma el token JWT
 const signToken = id => {
@@ -60,6 +60,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     // ,role: req.body.role
   });
 
+  // Envia un email al usuario para darle la bienvenida
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  await new Email(newUser, url).sendWelcome();
+
+  // Crea y envía el token al cliente
   createSendToken(newUser, 201, res);
 });
 
@@ -217,11 +222,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // Envio del email
   try {
-    await sendEmail({
+    /* await sendEmail({
       email: user.email,
       subject: 'Tu token de restablecimiento de contraseña (valido 10 min)',
       message
-    });
+    }); */
+
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',

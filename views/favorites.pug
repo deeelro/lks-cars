@@ -1,0 +1,20 @@
+extends base
+
+block content
+    main.vista-favoritos
+        h2.titulo-vista Tus favoritos
+
+        if favorites.length > 0
+            .contenedor-tarjetas
+                each car in favorites
+                    .tarjeta
+                        .tarjeta__imagen
+                            img(src=`/img/cars/${car.coverImage || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
+                        .tarjeta__detalles
+                            h3= `${car.brand} ${car.model}`
+                            p Año: #{car.year}
+                            p Precio: #{car.price} €
+                        .tarjeta__acciones
+                            button.btn.btn--small.btn--rojo(data-id=`${car._id}`) Eliminar de favoritos
+        else
+            p No tienes coches en tu lista de favoritos.
