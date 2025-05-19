@@ -7,14 +7,21 @@ block content
                 img(src=`/img/cars/${car.coverImage || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
                 
             .coche-detalle__acciones
-                if !car.reserved
+                //-if !car.reserved
                     button.boton.boton--verde(data-id=`${car._id}`) Reservar
-                else
+                //-else
                     if isReservedByCurrentUser
                         button.boton.boton--rojo(data-id=`${car._id}`) Desreservar
                     else
                         span.coche-detalle__reservado El coche está reservado
+
+                //- Boton de comprar
+                if car.sold
+                    span.coche-detalle__vendido VENDIDO
+                else
+                    button.boton.boton--azul#btn-comprar(data-car-id=`${car._id}`) COMPRAR
                 
+
                 //- Boton de favoritos
                 button.boton.boton--amarillo(data-id=`${car._id}`) Añadir a favoritos
             .coche-detalle__info
@@ -57,5 +64,5 @@ block content
                     h2 Galería de imágenes
                     .galeria
                         each image in car.images
-                            img(src=`/img/cars/${image}`, alt=`Imagen adicional de ${car.brand} ${car.model}`)
+                            img.galeria__foto(src=`/img/cars/${image}`, alt=`Imagen adicional de ${car.brand} ${car.model}`)
 

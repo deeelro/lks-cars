@@ -4,7 +4,7 @@ block content
     main.contenedor-principal 
         .contenedor-tarjetas 
             each car in cars 
-                .tarjeta 
+                .tarjeta(class=car.sold ? 'tarjeta-vendido' : '')
                     .tarjeta__encabezado 
                         .tarjeta__imagen 
                             .tarjeta__imagen-overlay &nbsp;

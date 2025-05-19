@@ -64,6 +64,10 @@ const carSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    sold: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const Car = mongoose.model('Car', carSchema)

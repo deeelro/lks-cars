@@ -1,4 +1,4 @@
-import { showAlert } from './alerts.js';
+/* import { showAlert } from './alerts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const reserveButton = document.querySelector('.boton--verde, .boton--rojo');
@@ -34,3 +34,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+ */

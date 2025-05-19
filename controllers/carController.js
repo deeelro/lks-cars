@@ -81,7 +81,7 @@ exports.createCar = catchAsync(async (req, res, next) => {
 });
 
 
-exports.reserveCar = catchAsync(async (req, res, next) => {
+/* exports.reserveCar = catchAsync(async (req, res, next) => {
     const car = await Car.findById(req.params.id);
 
     if (!car) {
@@ -133,7 +133,7 @@ exports.unreserveCar = catchAsync(async (req, res, next) => {
     });
 });
 
-
+ */
 
 
 

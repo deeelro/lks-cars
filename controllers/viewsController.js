@@ -3,6 +3,16 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
 exports.getOverview = catchAsync (async (req, res) => {
+    
+    // 1. Si viene de Stripe con parámetros de compra, marca el coche como vendido
+    if (req.query.car && req.query.user && req.query.price) {
+        await Car.findByIdAndUpdate(req.query.car, { sold: true });
+        // (Opcional) Puedes crear la venta aquí también si quieres
+        // await Sale.create({ car: req.query.car, user: req.query.user, price: req.query.price });
+        // Limpia la query string para evitar que se repita la acción si recarga
+        return res.redirect(req.path);
+    }
+    
     const cars = await Car.find();
     
     res.status(200).render('overview', {

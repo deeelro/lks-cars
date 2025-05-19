@@ -269,6 +269,28 @@ li {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.tarjeta-vendido {
+    opacity: 0.6;
+    filter: grayscale(80%);
+    border: 2px solid #dc3545;
+    position: relative;
+}
+
+.tarjeta-vendido::after {
+    content: "VENDIDO";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: #fff;
+    padding: 5px 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1rem;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
 .tarjeta:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -452,10 +474,36 @@ li {
     margin-top: 2rem;
 }
 
-.coche-detalle__reservado {
-    color: red;
-    font-weight: bold;
+/* Galería de imágenes */
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
+
+.galeria__foto {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.galeria__foto:hover {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    z-index: 2;
+    border: 2px solid #ff0000;
+}
+
+
+
+
+
 
 /* #endregion DETALLE COCHE */
 
