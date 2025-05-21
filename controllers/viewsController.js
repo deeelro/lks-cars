@@ -1,10 +1,12 @@
 const Car = require('./../models/carModel');
 const Sale = require('./../models/saleModel');
 const User = require('./../models/userModel');
+const Email = require('./../utils/email');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const { generatePurchasePDF } = require('../utils/pdf'); 
 
-exports.getOverview = catchAsync (async (req, res) => {
+/* exports.getOverview = catchAsync (async (req, res) => {
     
     // 1. Si viene de Stripe con parámetros de compra, marca el coche como vendido
     if (req.query.car && req.query.user && req.query.price) {
@@ -21,6 +23,49 @@ exports.getOverview = catchAsync (async (req, res) => {
         title: 'LKS Cars',
         cars
     })
+}); */
+
+exports.getOverview = catchAsync(async (req, res) => {
+  if (req.query.car && req.query.user && req.query.price) {
+    await Car.findByIdAndUpdate(req.query.car, { sold: true });
+
+    // Generar número de factura correlativo
+    const year = new Date().getFullYear();
+    const lastSale = await Sale.findOne({ invoiceNumber: { $regex: `^${year}-` } })
+      .sort({ createdAt: -1 })
+      .select('invoiceNumber');
+
+    let nextNumber = 1;
+    if (lastSale && lastSale.invoiceNumber) {
+      const last = parseInt(lastSale.invoiceNumber.split('-')[1], 10);
+      nextNumber = last + 1;
+    }
+    const invoiceNumber = `${year}-${String(nextNumber).padStart(3, '0')}`;
+
+    // Crear la venta con el número de factura
+    const sale = await Sale.create({
+      car: req.query.car,
+      user: req.query.user,
+      price: req.query.price,
+      invoiceNumber
+    });
+
+    const user = await User.findById(req.query.user);
+    const car = await Car.findById(req.query.car);
+
+    // Genera el PDF
+    const pdfBuffer = await generatePurchasePDF(user, car, sale);
+
+    // Envía la factura con PDF adjunto
+    await new Email(user, null).sendPurchaseTicket({ sale, car, user, pdfBuffer });
+
+    return res.redirect(req.path);
+  }
+  const cars = await Car.find();
+  res.status(200).render('overview', {
+    title: 'LKS Cars',
+    cars
+  });
 });
 
 exports.getCar = catchAsync(async (req, res, next) => {

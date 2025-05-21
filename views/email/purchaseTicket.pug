@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title Ticket de compra
+  body
+    h1 ¡Gracias por tu compra, #{firstName}!
+    p Has comprado el vehículo: #{car.brand} #{car.model} (#{car.year})
+    p Precio: #{sale.price} €
+    p Fecha de compra: #{sale.createdAt.toLocaleDateString('es-ES')}
+    p ID de la venta: #{sale._id}
+    hr
+    p Si tienes dudas, contacta con soporte.

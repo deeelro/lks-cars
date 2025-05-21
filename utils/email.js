@@ -65,6 +65,35 @@ module.exports = class Email {
       'Recupera tu contraseña (valido solo 10 minutos)'
     );
   }
+
+
+/////////////////////////////////////////////////////
+// Envio de la factura de compra al cliente
+/////////////////////////////////////////////////////
+async sendPurchaseTicket({ sale, car, user, pdfBuffer }) {
+  const html = pug.renderFile(`${__dirname}/../views/email/purchaseTicket.pug`, {
+    firstName: user.name.split(' ')[0],
+    sale,
+    car
+  });
+
+  const mailOptions = {
+    from: this.from,
+    to: user.email,
+    subject: 'Tu factura de compra',
+    html,
+    text: htmlToText.convert(html),
+    attachments: [
+      {
+        filename: 'factura.pdf',
+        content: pdfBuffer,
+        contentType: 'application/pdf'
+      }
+    ]
+  };
+
+  await this.newTransport().sendMail(mailOptions);
+}
 };
 
 

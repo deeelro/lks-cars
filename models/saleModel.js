@@ -23,7 +23,12 @@ const saleSchema = new mongoose.Schema({
     paid: {
         type: Boolean,
         default: false
-    }
+    },
+    invoiceNumber: {
+        type: String,
+        unique: true,
+        required: true
+    },
 });
 
 saleSchema.pre(/^find/, function (next) {

@@ -8,11 +8,19 @@ block content
                 each sale in purchases
                     .tarjeta
                         .tarjeta__imagen
-                            img.tarjeta__imagen-img(src=`img/cars/${sale.car.coverImage || 'default.jpg'}`, alt=`${sale.car.brand} ${sale.car.model}`)
+                            if sale.carm 
+                                img.tarjeta__imagen-img(src=`img/cars/${sale.car.coverImage || 'default.jpg'}`, alt=`${sale.car.brand} ${sale.car.model}`)
+                            else 
+                                img.tarjeta__imagen-img(src=`img/cars/default.jpg`, alt='Vehículo eliminado')
                         .tarjeta__detalles
-                            h3= `${sale.car.brand} ${sale.car.model}`
-                            p Año: #{sale.car.year}
-                            p Precio: #{sale.price} €
+                            if sale.car 
+                                h3= `${sale.car.brand} ${sale.car.model}`
+                                p Año: #{sale.car.year}
+                                p Precio: #{sale.price} €
+                                p ID de la venta: #{sale._id}
+                                p Numero de factura: #{sale.invoiceNumber}
+                            else  
+                                h3 No se ha encontrado el vehículo 
                         .tarjeta__pie
                             span Fecha de compra: #{sale.createdAt.toLocaleDateString('es-ES')}
         else
