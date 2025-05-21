@@ -8,8 +8,9 @@ block content
             .contenedor-tarjetas
                 each car in favorites
                     .tarjeta
-                        .tarjeta__imagen
-                            img(src=`/img/cars/${car.coverImage || 'default.jpg'}`, alt=`Imagen de ${car.brand} ${car.model}`)
+                        a(href=`/car/${car._id}`)
+                            .tarjeta__imagen
+                                img.tarjeta__imagen-img(src=`img/cars/${car.coverImage || 'default.jpg'}`, alt=`${car.brand} ${car.model}`)
                         .tarjeta__detalles
                             h3= `${car.brand} ${car.model}`
                             p Año: #{car.year}

@@ -1,0 +1,119 @@
+/* Fondo degradado moderno */
+body {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Elimina flex para respetar header/footer */
+    padding: 0;
+    margin: 0;
+}
+
+/* Contenedor con estilo glassmorphism */
+.form-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(255, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px);
+    max-width: 420px;
+    width: 100%;
+    padding: 2.5rem 2rem;
+    margin: 60px auto 40px auto; /* Deja espacio arriba y abajo para header/footer */
+    animation: fadeInUp 0.8s ease both;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+/* Título */
+h2 {
+    color: #b30000;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 6px rgba(255, 0, 0, 0.08);
+}
+
+/* Formulario y campos */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+label {
+    font-size: 0.95rem;
+    color: #a10000;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Input moderno */
+.form__input {
+    padding: 12px 14px;
+    border: 1.5px solid #ffcccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(255, 0, 0, 0.05);
+}
+
+.form__input:focus {
+    border-color: #ff6666;
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+/* Botón estilizado */
+.btn--green {
+    background: linear-gradient(90deg, #ff4d4d 0%, #cc0000 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn--green:hover {
+    background: linear-gradient(90deg, #cc0000 0%, #ff4d4d 100%);
+    transform: translateY(-3px) scale(1.03);
+}
+
+/* Animación */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 1.5rem 1rem;
+        max-width: 100%;
+        margin: 30px 0 20px 0;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+}

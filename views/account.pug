@@ -5,8 +5,6 @@ mixin navItem(link, text, icon, active)
     li(class=`${active ? 'menu-activo' : ''}`) 
         a(href=`${link}`)
             img.icono-perfil(src=`/img/icons/${icon}.png`, alt=`Icono de ${text}`)
-            //-svg  
-                use(xlink:href=`img/icons.svg#${icon}`)
             | #{text}
 
 block content 

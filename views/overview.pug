@@ -15,17 +15,11 @@ block content
                         
                     .tarjeta__detalles
                         .tarjeta__dato 
-                            svg.tarjeta__icono 
-                                use(xlink:href='img/icons.svg#icon-calendar')
-                            span= car.year
+                            span= `Año de fabricación: ${car.year}`
                         .tarjeta__dato
-                            svg.tarjeta__icono
-                                use(xlink:href='img/icons.svg#icon-fuel')
-                            span= car.fuelType
+                            span= `Tipo de combustible: ${car.fuelType}`
                         .tarjeta__dato
-                            svg.tarjeta__icono
-                                use(xlink:href='img/icons.svg#icon-engine')
-                            span= `${car.enginePower} CV`
+                            span= `Potencia: ${car.enginePower} CV`
 
                     .tarjeta__pie 
                         p

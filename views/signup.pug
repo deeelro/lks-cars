@@ -1,0 +1,21 @@
+extends base
+block append head
+  link(rel="stylesheet", href="/css/signup.css")
+
+block content
+  .form-container
+    h2 Regístrate en LKS Cars
+    form.form
+      .form__group
+        label(for="name") Nombre
+        input#name.form__input(type="text", name="name", required)
+      .form__group
+        label(for="email") Email
+        input#email.form__input(type="email", name="email", required)
+      .form__group
+        label(for="password") Contraseña
+        input#password.form__input(type="password", name="password", required, minlength="8")
+      .form__group
+        label(for="passwordConfirm") Confirmar contraseña
+        input#passwordConfirm.form__input(type="password", name="passwordConfirm", required, minlength="8")
+      button.btn.btn--green(type="submit") Registrarse

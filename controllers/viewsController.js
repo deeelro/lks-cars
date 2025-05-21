@@ -89,6 +89,13 @@ exports.getCar = catchAsync(async (req, res, next) => {
 });
 
 
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('signup', {
+    title: 'Regístrate'
+  });
+};
+
+
 exports.getLoginForm = (req, res) => {
     res.status(200).render('login', {
         title: 'Log into your account'
@@ -132,5 +139,22 @@ exports.getMyPurchases = catchAsync(async (req, res) => {
     res.status(200).render('myPurchases', {
         title: 'Mis compras',
         purchases
+    });
+});
+
+
+exports.getFavoritesView = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id).populate({
+        path: 'favorites',
+        select: 'brand model year price coverImage'
+    });
+
+    if (!user) {
+        return next(new AppError('No se encontró el usuario', 404));
+    }
+
+    res.status(200).render('favorites', {
+        title: 'Tus favoritos',
+        favorites: user.favorites
     });
 });
