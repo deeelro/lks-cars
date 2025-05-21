@@ -1,0 +1,19 @@
+extends base
+
+block content
+    main.contenedor-principal
+        h2 Mis compras
+        if purchases.length
+            .contenedor-tarjetas
+                each sale in purchases
+                    .tarjeta
+                        .tarjeta__imagen
+                            img.tarjeta__imagen-img(src=`img/cars/${sale.car.coverImage || 'default.jpg'}`, alt=`${sale.car.brand} ${sale.car.model}`)
+                        .tarjeta__detalles
+                            h3= `${sale.car.brand} ${sale.car.model}`
+                            p Año: #{sale.car.year}
+                            p Precio: #{sale.price} €
+                        .tarjeta__pie
+                            span Fecha de compra: #{sale.createdAt.toLocaleDateString('es-ES')}
+        else
+            p No has realizado ninguna compra todavía.

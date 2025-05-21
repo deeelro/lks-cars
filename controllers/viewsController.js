@@ -1,4 +1,6 @@
 const Car = require('./../models/carModel');
+const Sale = require('./../models/saleModel');
+const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -7,9 +9,9 @@ exports.getOverview = catchAsync (async (req, res) => {
     // 1. Si viene de Stripe con parámetros de compra, marca el coche como vendido
     if (req.query.car && req.query.user && req.query.price) {
         await Car.findByIdAndUpdate(req.query.car, { sold: true });
-        // (Opcional) Puedes crear la venta aquí también si quieres
-        // await Sale.create({ car: req.query.car, user: req.query.user, price: req.query.price });
-        // Limpia la query string para evitar que se repita la acción si recarga
+
+        await Sale.create({ car: req.query.car, user: req.query.user, price: req.query.price });
+
         return res.redirect(req.path);
     }
     
@@ -76,5 +78,14 @@ exports.getManageCars = catchAsync(async (req, res, next) => {
         title: 'Administrar Vehículos',
         cars, // Pasa los vehículos a la vista
         user: req.user // Pasa el usuario a la vista
+    });
+});
+
+exports.getMyPurchases = catchAsync(async (req, res) => {
+    const purchases = await Sale.find({ user: req.user.id }).select('+createdAt');
+
+    res.status(200).render('myPurchases', {
+        title: 'Mis compras',
+        purchases
     });
 });

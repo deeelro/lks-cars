@@ -29,7 +29,7 @@ const saleSchema = new mongoose.Schema({
 saleSchema.pre(/^find/, function (next) {
     this.populate('user').populate({
         path: 'car',
-        select: 'name'
+        select: 'brand model price coverImage year'
     });
     next();
 });
