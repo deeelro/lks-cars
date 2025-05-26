@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Funcionalidad para administrar vehículos 
-    const deleteButtons = document.querySelectorAll('.btn--rojo');
+    const deleteButtons = document.querySelectorAll('.btn-car-delete');
     deleteButtons.forEach((button) => {
         button.addEventListener('click', async (e) => {
             const carId = e.target.dataset.id;

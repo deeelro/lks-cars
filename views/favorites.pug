@@ -16,6 +16,6 @@ block content
                             p Año: #{car.year}
                             p Precio: #{car.price} €
                         .tarjeta__acciones
-                            button.btn.btn--small.btn--rojo(data-id=`${car._id}`) Eliminar de favoritos
+                            button.btn.btn--small.btn--rojo.btn-fav-remove(data-id=`${car._id}`) Eliminar de favoritos
         else
             p No tienes coches en tu lista de favoritos.

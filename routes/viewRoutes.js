@@ -17,8 +17,13 @@ router.get('/favorites',
     viewsController.getFavoritesView
 );
 
-// Rutas de la administracion de vehiculos
+// Rutas de la administracion
 router.get('/add-car', authController.protect, authController.restrictTo('admin'), viewsController.addCar);
 router.get('/manage-cars', authController.protect, authController.restrictTo('admin'), viewsController.getManageCars);
+router.get(
+    '/admin-stats', 
+    authController.protect, 
+    authController.restrictTo('admin'), 
+    viewsController.getAdminStats);
 
 module.exports = router;

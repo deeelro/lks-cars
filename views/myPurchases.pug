@@ -8,7 +8,7 @@ block content
                 each sale in purchases
                     .tarjeta
                         .tarjeta__imagen
-                            if sale.carm 
+                            if sale.car 
                                 img.tarjeta__imagen-img(src=`img/cars/${sale.car.coverImage || 'default.jpg'}`, alt=`${sale.car.brand} ${sale.car.model}`)
                             else 
                                 img.tarjeta__imagen-img(src=`img/cars/default.jpg`, alt='Vehículo eliminado')

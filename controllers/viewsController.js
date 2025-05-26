@@ -6,24 +6,6 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const { generatePurchasePDF } = require('../utils/pdf'); 
 
-/* exports.getOverview = catchAsync (async (req, res) => {
-    
-    // 1. Si viene de Stripe con parámetros de compra, marca el coche como vendido
-    if (req.query.car && req.query.user && req.query.price) {
-        await Car.findByIdAndUpdate(req.query.car, { sold: true });
-
-        await Sale.create({ car: req.query.car, user: req.query.user, price: req.query.price });
-
-        return res.redirect(req.path);
-    }
-    
-    const cars = await Car.find();
-    
-    res.status(200).render('overview', {
-        title: 'LKS Cars',
-        cars
-    })
-}); */
 
 exports.getOverview = catchAsync(async (req, res) => {
   if (req.query.car && req.query.user && req.query.price) {
@@ -61,7 +43,7 @@ exports.getOverview = catchAsync(async (req, res) => {
 
     return res.redirect(req.path);
   }
-  const cars = await Car.find();
+  const cars = await Car.find().sort({ sold: 1});
   res.status(200).render('overview', {
     title: 'LKS Cars',
     cars
@@ -121,14 +103,25 @@ exports.addCar = (req, res) => {
 
 
 exports.getManageCars = catchAsync(async (req, res, next) => {
-    const cars = await Car.find().populate({
-        path: 'reservedBy',
-        select: 'name email'
-    })
+    const cars = await Car.find();
+
+    // Para cada coche vendido, busca el comprador
+    const carsWithBuyer = await Promise.all(
+        cars.map(async car => {
+            let buyer = null;
+            if (car.sold) {
+                const sale = await Sale.findOne({ car: car._id }).populate('user', 'name email');
+                if (sale && sale.user) {
+                    buyer = sale.user;
+                }
+            }
+            return { ...car.toObject(), buyer };
+        })
+    );
 
     res.status(200).render('manageCars', {
         title: 'Administrar Vehículos',
-        cars, // Pasa los vehículos a la vista
+        cars: carsWithBuyer, // Pasa los vehículos a la vista
         user: req.user // Pasa el usuario a la vista
     });
 });
@@ -156,5 +149,148 @@ exports.getFavoritesView = catchAsync(async (req, res, next) => {
     res.status(200).render('favorites', {
         title: 'Tus favoritos',
         favorites: user.favorites
+    });
+});
+
+
+// ESTADISTICAS 
+exports.getAdminStats = catchAsync(async (req, res, next) => {
+        // Total de ingresos por mes (último año)
+    const salesStats = await Sale.aggregate([
+        {
+            $match: {
+            createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) }
+            }
+        },
+        {
+        $group: {
+            _id: { $month: '$createdAt' },
+            ventas: { $push: { car: '$car', price: '$price' } }
+        }
+        },
+        { $sort: { _id: 1 } }
+    ]);
+
+    const filterSalesStats = [];
+    for (let stat of salesStats) {
+        let totalIngresos = 0;
+        let totalVentas = 0;
+        for (let venta of stat.ventas) {
+            const carDoc = await Car.findById(venta.car);
+            if (carDoc) {
+            totalIngresos += venta.price;
+            totalVentas += 1;
+            }
+        }
+        filterSalesStats.push({
+            _id: stat._id,
+            totalIngresos,
+            totalVentas
+        });
+    }
+
+    // Nuevos registros de usuarios por mes (último año)
+    const userStats = await User.aggregate([
+        {
+            $match: {
+            createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) }
+            }
+        },
+        {
+            $group: {
+            _id: { $month: '$createdAt' },
+            totalUsuarios: { $sum: 1 }
+            }
+        },
+        { $sort: { _id: 1 } }
+    ]);
+
+    // Usuarios más activos (por número de compras)
+    const topBuyers = await Sale.aggregate([
+        {
+            $group: {
+            _id: '$user',
+            compras: { $sum: 1 }
+            }
+        },
+        { $sort: { compras: -1 } },
+        { $limit: 5 }
+    ]);
+    // Popula los nombres de usuario
+    for (let buyer of topBuyers) {
+        const user = await User.findById(buyer._id);
+        buyer.name = user ? user.name : 'Usuario eliminado';
+        buyer.email = user ? user.email : 'Email no disponible';
+    }
+
+    // Coches más vendidos
+    const topCars = await Sale.aggregate([
+        {
+            $lookup: {
+            from: 'cars',
+            localField: 'car',
+            foreignField: '_id',
+            as: 'carInfo'
+            }
+        },
+        { $unwind: '$carInfo' },
+        {
+            $group: {
+            _id: { brand: '$carInfo.brand', model: '$carInfo.model' },
+            ventas: { $sum: 1 }
+            }
+        },
+        { $sort: { ventas: -1 } },
+        { $limit: 5 }
+    ]);
+
+    const filteredTopCars = [];
+    for (let car of topCars) {
+        // Busca por marca y modelo normalizados
+        const carDoc = await Car.findOne({
+            brand: car._id.brand,
+            model: car._id.model
+        });
+        if (carDoc) {
+            car.info = `${carDoc.brand} ${carDoc.model}`;
+            filteredTopCars.push(car);
+        }
+    }
+
+    // Coches más añadidos a favoritos
+    const favStats = await User.aggregate([
+        { $unwind: '$favorites' },
+        {
+            $group: {
+            _id: '$favorites',
+            count: { $sum: 1 }
+            }
+        },
+        { $sort: { count: -1 } },
+        { $limit: 5 }
+    ]);
+    const filteredFavStats = [];
+    for (let fav of favStats) {
+        const carDoc = await Car.findById(fav._id);
+        if (carDoc) {
+            fav.info = `${carDoc.brand} ${carDoc.model}`;
+            filteredFavStats.push(fav);
+        }
+    }
+
+    // Tasa de conversión (ventas/usuarios registrados)
+    const totalUsers = await User.countDocuments();
+    const totalSales = await Sale.countDocuments();
+    const conversionRate = totalUsers ? ((totalSales / totalUsers) * 100).toFixed(2) : 0;
+
+    res.status(200).render('adminStats', {
+        title: 'Estadísticas',
+        salesStats: filterSalesStats,
+        userStats,
+        topBuyers,
+        topCars: filteredTopCars,
+        favStats: filteredFavStats,
+        conversionRate,
+        user: req.user // Pasa el usuario a la vista
     });
 });

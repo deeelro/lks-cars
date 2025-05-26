@@ -472,6 +472,9 @@ li {
 
 .coche-detalle__acciones {
     margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
 /* Galería de imágenes */
@@ -533,6 +536,11 @@ li {
 .boton--amarillo {
     background-color: #ffc107;
     color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; 
+    width: 100%;  
 }
 
 .boton--amarillo:hover {
@@ -707,3 +715,138 @@ li {
 /* #endregion ERROR */
 
 
+/* #region ESTADISTICAS */
+
+.vista-admin-stats {
+    max-width: 1100px;
+    margin: 48px auto 64px auto;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    background: #f9fafc;
+    border-radius: 24px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.10), 0 2px 8px rgba(44,62,80,0.06);
+    animation: fadeInUp 0.8s cubic-bezier(.39,.575,.56,1) both;
+    border: 1.5px solid #e3e8ee;
+}
+
+.stats-title {
+    text-align: center;
+    color: #22223b;
+    font-size: 2.7rem;
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(44,62,80,0.06);
+}
+
+.stats-section-title {
+    color: #3a86ff;
+    font-size: 1.25rem;
+    margin-top: 2.2rem;
+    margin-bottom: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-left: 5px solid #a8dadc;
+    padding-left: 14px;
+}
+
+.stats-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.stats-item {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(58,134,255,0.07);
+    padding: 1.3rem 2.1rem;
+    font-size: 1.08rem;
+    color: #22223b;
+    font-weight: 600;
+    min-width: 220px;
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    border: 1.5px solid #e3e8ee;
+    transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
+    position: relative;
+    cursor: default;
+}
+
+
+.stats-label {
+    color: #3a86ff;
+    font-weight: 700;
+    font-size: 1.08rem;
+    margin-bottom: 2px;
+    letter-spacing: 0.2px;
+}
+
+.stats-value {
+    color: #22223b;
+    font-size: 1.32rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+    letter-spacing: 0.1px;
+}
+
+.stats-sub {
+    color: #6c757d;
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
+.stats-empty {
+    color: #bdbdbd;
+    font-style: italic;
+    margin: 0 0 1.5rem 0;
+    padding-left: 10px;
+}
+
+.conversion-rate {
+    background: linear-gradient(90deg, #e0ffe0 0%, #b3ffb3 100%);
+    color: #198754;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 14px;
+    padding: 1.1rem 1.7rem;
+    margin: 2.2rem 0 0 0;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(25,135,84,0.07);
+    border: 1.5px solid #b2dfdb;
+    letter-spacing: 0.5px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .vista-admin-stats {
+        padding: 1.2rem 0.5rem;
+        max-width: 100%;
+    }
+    .stats-title {
+        font-size: 1.7rem;
+    }
+    .stats-section-title {
+        font-size: 1.05rem;
+    }
+    .stats-item {
+        font-size: 0.98rem;
+        min-width: 140px;
+        padding: 0.7rem 0.8rem;
+    }
+}
+/* #endregion ESTADISTICAS */

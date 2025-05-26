@@ -60,15 +60,17 @@ const carSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    reservedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
     sold: {
         type: Boolean,
         default: false
     },
 })
+
+carSchema.pre('save', function(next) {
+  if (this.brand) this.brand = this.brand.trim().toUpperCase();
+  if (this.model) this.model = this.model.trim().toUpperCase();
+  next();
+});
 
 const Car = mongoose.model('Car', carSchema)
 module.exports = Car;

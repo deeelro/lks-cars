@@ -1,0 +1,64 @@
+extends base
+
+
+block content
+  main.vista-admin-stats
+    h2.stats-title Estadísticas
+
+    h3.stats-section-title Total de ingresos por mes
+    if salesStats.length
+      ul.stats-list
+        - const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+        each stat in salesStats
+          li.stats-item
+            span.stats-label #{meses[stat._id - 1]}:
+            span.stats-value #{stat.totalIngresos} €
+            span.stats-sub (#{stat.totalVentas} ventas)
+    else
+      p.stats-empty No hay ventas registradas este año.
+
+    h3.stats-section-title Nuevos registros de usuarios por mes
+    if userStats.length
+      ul.stats-list
+        - const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+        each stat in userStats
+          li.stats-item
+            span.stats-label #{meses[stat._id - 1]}:
+            span.stats-value #{stat.totalUsuarios} usuarios nuevos
+    else
+      p.stats-empty No hay registros este año.
+
+    h3.stats-section-title Usuarios más activos (por compras)
+    if topBuyers.length
+      ul.stats-list
+        each buyer in topBuyers
+          li.stats-item
+            span.stats-label #{buyer.name} (#{buyer.email}):
+            span.stats-value #{buyer.compras} compras
+    else
+      p.stats-empty No hay datos de compras.
+
+    h3.stats-section-title Coches más vendidos
+    if topCars.length
+      ul.stats-list
+        each car in topCars
+          li.stats-item
+            span.stats-label #{car._id.brand} #{car._id.model}:
+            span.stats-value #{car.ventas} ventas
+    else
+      p.stats-empty No hay datos de ventas.
+
+    h3.stats-section-title Coches más añadidos a favoritos
+    if favStats.length
+      ul.stats-list
+        each fav in favStats
+          li.stats-item
+            span.stats-label #{fav.info}:
+            span.stats-value #{fav.count} veces en favoritos
+    else
+      p.stats-empty No hay datos de favoritos.
+
+    h3.stats-section-title Tasa de conversión
+    p.conversion-rate #{conversionRate}% de usuarios han realizado al menos una compra.
+
+    // Puedes añadir gráficos con Chart.js o Google Charts si quieres visualización avanzada

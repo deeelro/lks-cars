@@ -12,8 +12,9 @@ block content
                         th Modelo
                         th Año
                         th Precio (€)
-                        th Reservado
-                        th Reservado por
+                        th Vendido
+                        th Comprado por
+                        th Acciones
                 tbody
                     each car in cars
                         tr
@@ -21,13 +22,13 @@ block content
                             td= car.model
                             td= car.year
                             td= `${car.price} €`
-                            td= car.reserved ? 'Sí' : 'No'
+                            td= car.sold ? 'Sí' : 'No'
                             td 
-                                if car.reservedBy 
-                                    span= `${car.reservedBy.name} (${car.reservedBy.email})`
+                                if car.buyer 
+                                    span= `${car.buyer.name} (${car.buyer.email})`
                                 else
-                                    span No reservado
+                                    span No vendido
                             td
-                                button.btn.btn--small.btn--rojo(data-id=`${car._id}`) Eliminar
+                                button.btn.btn--small.btn--rojo.btn-car-delete(data-id=`${car._id}`) Eliminar
         else
             p No hay vehículos disponibles en la base de datos.

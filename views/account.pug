@@ -13,7 +13,7 @@ block content
             nav.menu-usuario 
                 ul 
                     +navItem('/', 'Menu principal', 'menu-principal', true)
-                    +navItem('/favorites', 'Favoritos', 'favorito')
+                    +navItem('/favorites', 'Favoritos', 'fav-sin-relleno')
                     +navItem('/my-purchases', 'Mis compras', 'reservado')
                     +navItem('/cars', 'Creditos', 'derechos-autor')
                 
@@ -24,6 +24,7 @@ block content
                             +navItem('#', 'Administrar usuarios', 'admin-usuarios')
                             +navItem('/add-car', 'Añadir vehiculos', 'coche-deportivo')
                             +navItem('/manage-cars', 'Administrar vehiculos', 'coche-deportivo')
+                            +navItem('/admin-stats', 'Estadísticas', 'estadisticas')
 
             .contenido-vista-usuario
                 .contenedor-formularios

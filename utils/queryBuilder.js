@@ -9,7 +9,7 @@ class QueryBuilder {
         const excludedFields = ['page', 'sort', 'limit', 'fields'];
         excludedFields.forEach(el => delete queryObj[el]);
 
-        // 1B) Advanced filtering
+        // Filtrado
         let queryStr = JSON.stringify(queryObj);
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte|ne)\b/g, match => `$${match}`);
         this.query = this.query.find(JSON.parse(queryStr));
@@ -39,7 +39,7 @@ class QueryBuilder {
     paginate() {
         const page = this.queryString.page * 1 || 1;
         const limit = this.queryString.limit * 1 || 100;
-        const skip = (page - 1) * limit; // Skip the first (page - 1) * limit results
+        const skip = (page - 1) * limit; // Se saltan los elementos de la página anterior
 
         this.query = this.query.skip(skip).limit(limit);
         return this;

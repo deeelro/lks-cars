@@ -1,7 +1,7 @@
 import { showAlert } from './alerts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const deleteButtons = document.querySelectorAll('.btn--rojo');
+    const deleteButtons = document.querySelectorAll('.btn-fav-remove');
 
     deleteButtons.forEach((button) => {
         button.addEventListener('click', async (e) => {
