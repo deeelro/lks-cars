@@ -1,7 +1,7 @@
 extends base
 
-
 block content
+  script(src='https://cdn.jsdelivr.net/npm/chart.js')
   main.vista-admin-stats
     h2.stats-title Estadísticas
 
@@ -59,6 +59,99 @@ block content
       p.stats-empty No hay datos de favoritos.
 
     h3.stats-section-title Tasa de conversión
-    p.conversion-rate #{conversionRate}% de usuarios han realizado al menos una compra.
+    p.conversion-rate El #{conversionRate}% de usuarios han realizado al menos una compra.
 
-    // Puedes añadir gráficos con Chart.js o Google Charts si quieres visualización avanzada
+
+    //- GRAFICOS
+    h3.stats-section-title GRAFICOS
+
+    h3.stats-section-title Ventas por mes
+    canvas.grafico-barra#ventasPorMesChart(width='320' height='160')
+
+    h3.stats-section-title Ingresos por mes
+    canvas.grafico-linea#ingresosPorMesChart(width='320' height='160')
+
+    h3.stats-section-title Vehículos más vendidos
+    canvas.grafico-pastel#topCarsPieChart(width='300' height='300')
+
+    h3.stats-section-title Vehículos más añadidos a favoritos
+    canvas.grafico-barra#topFavCarsBarChart(width='320' height='160')
+
+    //- PASO LOS DATOS A JSON
+    script.
+      const ventasPorMesLabels = !{JSON.stringify(ventasPorMesLabels)};
+      const ventasPorMesData = !{JSON.stringify(ventasPorMesData)};
+      const ingresosPorMesData = !{JSON.stringify(ingresosPorMesData)};
+      const topCarsLabels = !{JSON.stringify(topCarsLabels)};
+      const topCarsData = !{JSON.stringify(topCarsData)};
+      const topFavCarsLabels = !{JSON.stringify(topFavCarsLabels)};
+      const topFavCarsData = !{JSON.stringify(topFavCarsData)};
+
+    
+    script.
+      // Ventas por mes (barras)
+      new Chart(document.getElementById('ventasPorMesChart'), {
+        type: 'bar',
+        data: {
+          labels: ventasPorMesLabels,
+          datasets: [{
+            label: 'Ventas por mes',
+            data: ventasPorMesData,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      // Ingresos por mes (líneas)
+      new Chart(document.getElementById('ingresosPorMesChart'), {
+        type: 'line',
+        data: {
+          labels: ventasPorMesLabels,
+          datasets: [{
+            label: 'Ingresos por mes (€)',
+            data: ingresosPorMesData,
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            tension: 0.1
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      // Coches más vendidos (pastel)
+      new Chart(document.getElementById('topCarsPieChart'), {
+        type: 'pie',
+        data: {
+          labels: topCarsLabels,
+          datasets: [{
+            label: 'Coches más vendidos',
+            data: topCarsData,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)'
+            ]
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      // Coches más añadidos a favoritos (barras horizontales)
+      new Chart(document.getElementById('topFavCarsBarChart'), {
+        type: 'bar',
+        data: {
+          labels: topFavCarsLabels,
+          datasets: [{
+            label: 'Veces añadido a favoritos',
+            data: topFavCarsData,
+            backgroundColor: 'rgba(255, 206, 86, 0.5)'
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true
+        }
+      });

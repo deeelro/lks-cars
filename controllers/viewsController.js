@@ -283,6 +283,26 @@ exports.getAdminStats = catchAsync(async (req, res, next) => {
     const totalSales = await Sale.countDocuments();
     const conversionRate = totalUsers ? ((totalSales / totalUsers) * 100).toFixed(2) : 0;
 
+    // GRAFICOS
+    const meses = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    // Ventas por mes
+    const ventasPorMesLabels = filterSalesStats.map(stat => meses[stat._id - 1]);
+    const ventasPorMesData = filterSalesStats.map(stat => stat.totalVentas);
+
+    // Ingresos por mes
+    const ingresosPorMesData = filterSalesStats.map(stat => stat.totalIngresos);
+
+    // Coches más vendidos
+    const topCarsLabels = filteredTopCars.map(car => car.info);
+    const topCarsData = filteredTopCars.map(car => car.ventas);
+
+    // Coches más añadidos a favoritos
+    const topFavCarsLabels = filteredFavStats.map(fav => fav.info);
+    const topFavCarsData = filteredFavStats.map(fav => fav.count);
+
     res.status(200).render('adminStats', {
         title: 'Estadísticas',
         salesStats: filterSalesStats,
@@ -291,6 +311,14 @@ exports.getAdminStats = catchAsync(async (req, res, next) => {
         topCars: filteredTopCars,
         favStats: filteredFavStats,
         conversionRate,
-        user: req.user // Pasa el usuario a la vista
+        user: req.user, // Pasa el usuario a la vista
+
+        ventasPorMesLabels,
+        ventasPorMesData,
+        ingresosPorMesData,
+        topCarsLabels,
+        topCarsData,
+        topFavCarsLabels,
+        topFavCarsData,
     });
 });

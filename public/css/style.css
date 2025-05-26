@@ -714,7 +714,6 @@ li {
 
 /* #endregion ERROR */
 
-
 /* #region ESTADISTICAS */
 
 .vista-admin-stats {
@@ -849,4 +848,17 @@ li {
         padding: 0.7rem 0.8rem;
     }
 }
+
+/* GRAFICOS */
+canvas.grafico-pastel {
+    display: block;
+    margin: 0 auto;
+}
+
+canvas.grafico-barra,
+canvas.grafico-linea {
+    display: block;
+    margin: 0 auto;
+}
+
 /* #endregion ESTADISTICAS */
