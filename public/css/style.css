@@ -555,6 +555,10 @@ li {
 .boton--rojo:hover {
     background-color: #c82333;
 }
+
+
+
+
 /* #endregion ADMINISTRACION COCHES */
 
 /* #region VISTA LOGIN */
@@ -605,6 +609,33 @@ li {
 .form-input:focus {
     border-color: #ff0000; 
     outline: none;  
+}
+
+/* Formulario de añadir coche */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.form-row .form__group {
+    flex: 1 1 220px;
+    min-width: 220px;
+}
+
+@media (max-width: 700px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+.form-section-title {
+    font-size: 1.2rem;
+    color: #b30000;
+    margin: 1.5rem 0 1rem 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 /* Botón de inicio de sesión */
