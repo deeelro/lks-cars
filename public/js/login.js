@@ -32,8 +32,7 @@ const logout = async() => {
             url: '/api/v1/users/logout', // url que tengo en el logout de Postman
         });
 
-        if ((res.data.status = 'success')) location.reload(true); // recargo la pagina
-
+        if (res.data.status === 'success') window.location.assign('/'); // Redirige al inicio
     } catch(err) {
         showAlert('error', 'Error al cerrar sesion! Intentelo de nuevo.'); // si hay un error, lo muestro en un alert
     }
