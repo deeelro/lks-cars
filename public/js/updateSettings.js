@@ -4,8 +4,8 @@ import { showAlert } from "./alerts.js";
 const updateSettings = async (data, type) => {
     try {
         const url = type === 'password' // Si el tipo es password
-            ? 'http://localhost:3000/api/v1/users/updateMyPassword' // Actualiza la contraseña
-            : 'http://localhost:3000/api/v1/users/updateMe'; // Actualiza el nombre y email
+            ? '/api/v1/users/updateMyPassword' // Actualiza la contraseña
+            : '/api/v1/users/updateMe'; // Actualiza el nombre y email
 
         const res = await axios({
             method: 'PATCH', // Método PATCH para actualizar

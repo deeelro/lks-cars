@@ -5,7 +5,7 @@ const login = async (email, password) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: 'http://localhost:3000/api/v1/users/login', // url que tengo en el login de Postman
+            url: '/api/v1/users/login', // url que tengo en el login de Postman
             data: { // lo que le voy a enviar al servidor
                 email,
                 password
@@ -29,7 +29,7 @@ const logout = async() => {
     try {
         const res = await axios({
             method: 'GET',
-            url: 'http://localhost:3000/api/v1/users/logout', // url que tengo en el logout de Postman
+            url: '/api/v1/users/logout', // url que tengo en el logout de Postman
         });
 
         if ((res.data.status = 'success')) location.reload(true); // recargo la pagina
