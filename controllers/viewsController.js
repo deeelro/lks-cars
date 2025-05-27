@@ -43,12 +43,33 @@ exports.getOverview = catchAsync(async (req, res) => {
 
     return res.redirect(req.path);
   }
-  const cars = await Car.find().sort({ sold: 1});
+    // Paginacion
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    const cars = await Car.find().sort({ sold: 1, createdAt: 1, _id: 1 }).skip(skip).limit(limit);
+    const totalCars = await Car.countDocuments();
+    const totalPages = Math.ceil(totalCars / limit);
+
+    // Respuesta
+    res.status(200).render('overview', {
+        title: 'LKS Cars',
+        cars,
+        currentPage: page,
+        totalPages
+    });
+
+
+
+  /* const cars = await Car.find().sort({ sold: 1});
   res.status(200).render('overview', {
     title: 'LKS Cars',
     cars
-  });
+  }); */
 });
+
+
 
 exports.getCar = catchAsync(async (req, res, next) => {
     const car = await Car.findById(req.params.id).populate({

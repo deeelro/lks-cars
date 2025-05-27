@@ -25,3 +25,15 @@ block content
                         p
                             span.tarjeta__pie-valor= `${car.price}€`
                         a.boton.boton--verde.boton--pequeno(href=`/car/${car._id}`) Ver detalles
+        if totalPages > 1
+        nav.paginacion
+            ul
+                if currentPage > 1
+                    li
+                        a(href=`/?page=${currentPage - 1}`) « Anterior
+                each page in [...Array(totalPages).keys()].map(n => n + 1)
+                    li(class=page === currentPage ? 'activo' : '')
+                        a(href=`/?page=${page}`)= page
+                if currentPage < totalPages
+                    li
+                        a(href=`/?page=${currentPage + 1}`) Siguiente »

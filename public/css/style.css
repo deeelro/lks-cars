@@ -1061,3 +1061,32 @@ canvas.grafico-linea {
 
 /* #endregion RESPONSIVE MOVILES */
 
+/* #region PAGINACION OVERVIEW */
+
+.paginacion ul {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 1rem 0;
+}
+.paginacion li {
+    display: inline;
+}
+.paginacion a {
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    background: #f7f7f7;
+    color: #b30000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.18s, color 0.18s;
+}
+.paginacion li.activo a,
+.paginacion a:hover {
+    background: #b30000;
+    color: #fff;
+}
+
+/* #endregion PAGINACION OVERVIEW */
