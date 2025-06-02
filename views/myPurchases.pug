@@ -1,5 +1,7 @@
 extends base
 
+block head 
+    link(rel='stylesheet', href='/css/myPurchases.css')
 block content
     main.contenedor-principal
         h2 Mis compras
@@ -17,11 +19,13 @@ block content
                                 h3= `${sale.car.brand} ${sale.car.model}`
                                 p Año: #{sale.car.year}
                                 p Precio: #{sale.price} €
-                                p ID de la venta: #{sale._id}
                                 p Numero de factura: #{sale.invoiceNumber}
+                                p Descargar factura:
+                                a.btn.btn--small.btn--azul(href=`/api/v1/sales/${sale._id}/factura`, target="_blank") Descargar factura
+
                             else  
                                 h3 No se ha encontrado el vehículo 
                         .tarjeta__pie
-                            span Fecha de compra: #{sale.createdAt.toLocaleDateString('es-ES')}
+                            span Fecha de compra: #{sale.createdAt ? sale.createdAt.toLocaleDateString('es-ES') : 'Desconocida'}      
         else
             p No has realizado ninguna compra todavía.

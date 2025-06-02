@@ -15,14 +15,13 @@ block content
                     +navItem('/', 'Menu principal', 'menu-principal', true)
                     +navItem('/favorites', 'Favoritos', 'fav-sin-relleno')
                     +navItem('/my-purchases', 'Mis compras', 'reservado')
-                    +navItem('/cars', 'Creditos', 'derechos-autor')
+                    //-+navItem('/cars', 'Creditos', 'derechos-autor')
                 
                 if user.role === 'admin'
                     .menu-admin 
                         h5.titulo-menu-admin Administracion 
                         ul.menu-lateral 
                             +navItem('#', 'Administrar usuarios', 'admin-usuarios')
-                            +navItem('/add-car', 'Añadir vehiculos', 'coche-deportivo')
                             +navItem('/manage-cars', 'Administrar vehiculos', 'coche-deportivo')
                             +navItem('/admin-stats', 'Estadísticas', 'estadisticas')
 

@@ -8,10 +8,10 @@ const Email = require('./../utils/email');
 
 // Firma el token JWT
 const signToken = id => {
-    const expiresIn = process.env.JWT_EXPIRES_IN; // Obtiene el valor de expiresIn desde el entorno
+    const expiresIn = process.env.JWT_EXPIRES_IN; 
 
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: expiresIn // Usamos el valor obtenido del entorno
+        expiresIn: expiresIn // El token expirará en el tiempo definido en el .env
     });
 };
 
@@ -23,12 +23,12 @@ const createSendToken = (user, statusCode, res) => {
 
   // Establece las opciones de la cookie:
   // - expires: la fecha de expiración del token
-  // - httpOnly: la cookie no es accesible desde JavaScript del lado del cliente
+  // - httpOnly: la cookie no es accesible desde JavaScript del lado del cliente (protege contra XSS)
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true // la cookie no es accesible desde JavaScript del lado del cliente (protege contra XSS)
+    httpOnly: true 
   };
 
   // Si el entorno es de producción, establece la opción secure en true

@@ -1,4 +1,3 @@
-// app.js
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -9,7 +8,6 @@ const carRouter = require('./routes/carRoutes');
 const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const salesRouter = require('./routes/salesRoutes');
-// const errorMiddleware = require('./utils/errorMiddleware');
 
 const app = express();
 

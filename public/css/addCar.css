@@ -1,0 +1,128 @@
+/* Contenedor principal */
+.vista-add-car {
+    max-width: 700px;
+    margin: 48px auto 64px auto;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    background: #f9fafc;
+    border-radius: 24px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.10), 0 2px 8px rgba(44,62,80,0.06);
+    border: 1.5px solid #e3e8ee;
+}
+
+/* Título */
+.titulo-formulario {
+    text-align: center;
+    color: #22223b;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 2.2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(44,62,80,0.06);
+}
+
+/* Sección del formulario */
+.form-section-title {
+    font-size: 1.15rem;
+    color: #b30000;
+    margin: 1.5rem 0 1rem 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Formulario */
+.form-add-car {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Fila de grupos */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* Grupo de campos */
+.form__group {
+    flex: 1 1 220px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.form__group.right {
+    align-items: flex-end;
+}
+
+/* Etiquetas */
+.form__label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: #333;
+}
+
+/* Inputs y selects */
+.form__input,
+.form__upload,
+textarea.form__input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    background: #fff;
+    resize: vertical;
+}
+
+.form__input:focus,
+textarea.form__input:focus,
+.form__upload:focus {
+    border-color: #b30000;
+    outline: none;
+}
+
+/* Botón */
+.btn--green {
+    background: linear-gradient(90deg, #4caf50 0%, #43a047 100%);
+    color: #fff;
+    font-weight: bold;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none;
+}
+.btn--green:hover {
+    background: linear-gradient(90deg, #388e3c 0%, #2e7d32 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .vista-add-car {
+        padding: 1.2rem 0.5rem;
+        max-width: 100%;
+    }
+    .titulo-formulario {
+        font-size: 1.3rem;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .form__group {
+        min-width: 0;
+    }
+    .btn--green {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+    }
+}

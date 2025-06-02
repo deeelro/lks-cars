@@ -10,4 +10,7 @@ router.get(
     salesController.checkoutSession
 );
 
+router.get('/:saleId/factura', salesController.downloadInvoice);
+
+
 module.exports = router;

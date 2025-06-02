@@ -7,11 +7,11 @@ const app = require('./app'); // Importamos la app de Express
 
 const DB = process.env.DATABASE;
 
-// Nos conectamos a MongoDB Atlas
+// Conexion a MongoDB Atlas
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-    useUnifiedTopology: true, // Muy importante para evitar warnings
+    useUnifiedTopology: true, 
     useFindAndModify: false 
   })
   .then(() => console.log('Conexión a MongoDB exitosa'));

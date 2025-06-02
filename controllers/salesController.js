@@ -1,8 +1,24 @@
+const { generatePurchasePDF } = require('../utils/pdf');
 const Car = require('./../models/carModel');
 const catchAsync = require('./../utils/catchAsync');
 const Sale = require('./../models/saleModel');
+const User = require('./../models/userModel');
 const factory = require('./controllerFactory');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+
+exports.downloadInvoice = async (req, res, next) => {
+  const sale = await Sale.findById(req.params.saleId).populate('car user');
+  if (!sale) return res.status(404).send('Factura no encontrada');
+
+  const pdfBuffer = await generatePurchasePDF(sale.user, sale.car, sale);
+
+  res.set({
+    'Content-Type': 'application/pdf',
+    'Content-Disposition': `attachment; filename="factura-${sale.invoiceNumber}.pdf"`
+  });
+  res.send(pdfBuffer);
+};
 
 exports.checkoutSession = catchAsync(async (req, res, next) => {
     const car = await Car.findById(req.params.carId);

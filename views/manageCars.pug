@@ -1,9 +1,14 @@
 extends base
 
+block head 
+    link(rel='stylesheet' href='/css/manageCars.css')
+    
 block content
     main.vista-admin-vehiculos
         h2.titulo-vista Administrar Vehículos
-
+        
+        a.btn.btn--green(href='/add-car') Añadir Vehículo        
+        
         if cars.length > 0
             table.tabla-vehiculos
                 thead
