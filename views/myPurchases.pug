@@ -20,7 +20,7 @@ block content
                                 p Año: #{sale.car.year}
                                 p Precio: #{sale.price} €
                                 p Numero de factura: #{sale.invoiceNumber}
-                                p Descargar factura:
+                                br
                                 a.btn.btn--small.btn--azul(href=`/api/v1/sales/${sale._id}/factura`, target="_blank") Descargar factura
 
                             else  

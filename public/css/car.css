@@ -1,0 +1,206 @@
+/* Contenedor principal */
+.contenedor-principal {
+    max-width: 1100px;
+    margin: 48px auto 64px auto;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    background: #f9fafc;
+    border-radius: 24px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.10), 0 2px 8px rgba(44,62,80,0.06);
+    border: 1.5px solid #e3e8ee;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Imagen principal */
+.coche-detalle__imagen {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.coche-detalle__imagen img {
+    max-width: 420px;
+    max-height: 280px;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+    object-fit: cover;
+}
+
+/* Acciones */
+.coche-detalle__acciones {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.boton {
+    font-weight: bold;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none;
+}
+.boton--verde {
+    background: linear-gradient(90deg, #4caf50 0%, #43a047 100%);
+    color: #fff;
+}
+.boton--verde:hover {
+    background: linear-gradient(90deg, #388e3c 0%, #2e7d32 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+.boton--rojo {
+    background: linear-gradient(90deg, #ff4747 0%, #b30000 100%);
+    color: #fff;
+}
+.boton--rojo:hover {
+    background: linear-gradient(90deg, #b30000 0%, #ff4747 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+.boton--azul {
+    background: linear-gradient(90deg, #1976d2 0%, #1565c0 100%);
+    color: #fff;
+}
+.boton--azul:hover {
+    background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+.boton--amarillo {
+    background: linear-gradient(90deg, #ffe082 0%, #ffb300 100%);
+    color: #222;
+}
+.boton--amarillo:hover {
+    background: linear-gradient(90deg, #ffb300 0%, #ffe082 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Info principal */
+.coche-detalle__info {
+    margin-bottom: 2rem;
+}
+.coche-detalle__info h1 {
+    font-size: 2.1rem;
+    color: #b30000;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+.coche-detalle__descripcion {
+    color: #444;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.coche-detalle__datos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem 2.5rem;
+}
+.coche-detalle__datos li {
+    font-size: 1.08rem;
+    color: #22223b;
+}
+.coche-detalle__datos strong {
+    color: #b30000;
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+/* Estado reservado/vendido */
+.coche-detalle__reservado,
+.coche-detalle__vendido {
+    font-weight: bold;
+    color: #fff;
+    background: #b30000;
+    padding: 0.4rem 1.1rem;
+    border-radius: 7px;
+    margin-left: 1rem;
+    font-size: 1.05rem;
+}
+
+/* Galería */
+.coche-detalle__galeria {
+    margin-top: 2.5rem;
+}
+.coche-detalle__galeria h2 {
+    font-size: 1.3rem;
+    color: #22223b;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+}
+.galeria {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.galeria__foto {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.09);
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 2px solid #fff;
+}
+.galeria__foto:hover {
+    transform: scale(1.07);
+    box-shadow: 0 4px 18px rgba(44,62,80,0.13);
+    border-color: #b30000;
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px #000;
+    background: #fff;
+}
+#lightbox button {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+#lightbox button:hover {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .contenedor-principal {
+        padding: 1.2rem 0.5rem;
+        max-width: 100%;
+    }
+    .coche-detalle__info h1 {
+        font-size: 1.3rem;
+    }
+    .coche-detalle__datos {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .galeria {
+        gap: 0.7rem;
+    }
+    .galeria__foto {
+        width: 95vw;
+        max-width: 180px;
+        height: auto;
+    }
+}
