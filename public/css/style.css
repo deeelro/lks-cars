@@ -1090,3 +1090,32 @@ canvas.grafico-linea {
 }
 
 /* #endregion PAGINACION OVERVIEW */
+
+
+/* #region lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px #000;
+    background: #fff;
+}
+#lightbox button {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+#lightbox button:hover {
+    opacity: 1;
+}
+/* #endregion lightbox */
+

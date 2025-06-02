@@ -65,4 +65,8 @@ block content
                     .galeria
                         each image in car.images
                             img.galeria__foto(src=`/img/cars/${image}`, alt=`Imagen adicional de ${car.brand} ${car.model}`)
-
+    // Lightbox container
+    #lightbox(style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;")
+        button#lightbox-prev(type="button" style="position:absolute;left:3vw;top:50%;transform:translateY(-50%);font-size:2.5rem;background:none;border:none;color:#fff;cursor:pointer;z-index:10001;") ‹
+        img#lightbox-img(style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 4px 32px #000;")
+        button#lightbox-next(type="button" style="position:absolute;right:3vw;top:50%;transform:translateY(-50%);font-size:2.5rem;background:none;border:none;color:#fff;cursor:pointer;z-index:10001;") ›
