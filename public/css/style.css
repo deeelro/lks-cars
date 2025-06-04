@@ -940,6 +940,35 @@ canvas.grafico-linea {
     margin: 0 auto;
 }
 
+.stats-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+.stats-tab {
+  background: #e3e8ee;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 7px 7px 0 0;
+  font-weight: bold;
+  color: #22223b;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+.stats-tab.activo, .stats-tab:hover {
+  background: #ff4747;
+  color: #fff;
+}
+.stats-section {
+  animation: fadein 0.3s;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* #endregion ESTADISTICAS */
 
 /* #region RESPONSIVE MOVILES */
