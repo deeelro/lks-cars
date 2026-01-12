@@ -58,8 +58,8 @@ La aplicación renderiza las siguientes vistas principales:
 * `/admin-stats`: Visualización de métricas de negocio (**Admin**).
 
 ## Demo del Proceso de Compra
+![Demo del Proceso de Compra](./public/img/procesoCompra.gif)
 
-![Demo del proceso de compra](./assets/compra-demo.gif)
 
 ## Despliegue en producción
 Desplegado en Railway
