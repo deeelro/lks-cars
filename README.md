@@ -26,9 +26,9 @@ Este es un proyecto de desarrollo completo que abarca desde la creación de una 
 | :--- | :--- | :--- | :--- |
 | POST | `/signup` | Registro de nuevos usuarios | Público |
 | POST | `/login` | Inicio de sesión | Público |
-| PATCH | `/updateMyPassword` | Cambiar contraseña actual | Authenticated user |
-| GET | `/me` | Obtener mi perfil | Authenticated user |
-| PATCH | `/addFavorite/:carId` | Guardar en favoritos | Authenticated user |
+| PATCH | `/updateMyPassword` | Cambiar contraseña actual | Usuario autenticado |
+| GET | `/me` | Obtener mi perfil | Usuario autenticado |
+| PATCH | `/addFavorite/:carId` | Guardar en favoritos | Usuario autenticado |
 | GET | `/` | Obtener todos los usuarios | Admin |
 | DELETE | `/:id` | Eliminar usuario | Admin |
 
@@ -44,8 +44,8 @@ Este es un proyecto de desarrollo completo que abarca desde la creación de una 
 ### Ventas y Facturación (`/api/v1/sales`)
 | Método | Endpoint | Descripción | Acceso |
 | :--- | :--- | :--- | :--- |
-| GET | `/checkout-session/:carId` | Crea sesión de pago Stripe | Authenticated user |
-| GET | `/:saleId/factura` | Descargar factura en PDF | Authenticated user |
+| GET | `/checkout-session/:carId` | Crea sesión de pago Stripe | Usuario autenticado |
+| GET | `/:saleId/factura` | Descargar factura en PDF | Usuario autenticado |
 
 ## Estructura de Vistas (Frontend)
 La aplicación renderiza las siguientes vistas principales:
