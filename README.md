@@ -21,13 +21,41 @@ Este es un proyecto de desarrollo completo que abarca desde la creación de una 
 
 ## Estructura de la API
 
-| Método | Endpoint | Descripción | Auth |
-| :--- | :--- | :--- | :---: |
-| POST | `/api/auth/register` | Registro de nuevos usuarios | ❌ |
-| POST | `/api/auth/login` | Inicio de sesión (Retorna Token) | ❌ |
-| GET | `/api/products` | Obtener catálogo de productos | ❌ |
-| POST | `/api/checkout` | Enviar carrito y procesar pago | ✅ |
-| GET | `/api/orders/me` | Historial de compras del usuario | ✅ |
+### Usuarios y Autenticación (`/api/v1/users`)
+| Método | Endpoint | Descripción | Acceso |
+| :--- | :--- | :--- | :--- |
+| POST | `/signup` | Registro de nuevos usuarios | Público |
+| POST | `/login` | Inicio de sesión | Público |
+| PATCH | `/updateMyPassword` | Cambiar contraseña actual | Authenticated user |
+| GET | `/me` | Obtener mi perfil | Authenticated user |
+| PATCH | `/addFavorite/:carId` | Guardar en favoritos | Authenticated user |
+| GET | `/` | Obtener todos los usuarios | Admin |
+| DELETE | `/:id` | Eliminar usuario | Admin |
+
+### Gestión de Vehículos (`/api/v1/cars`)
+| Método | Endpoint | Descripción | Acceso |
+| :--- | :--- | :--- | :--- |
+| GET | `/` | Listar todos los coches | Público |
+| GET | `/:id` | Ver detalles de un coche | Público |
+| POST | `/` | Crear nuevo coche (con imágenes) | Admin |
+| PATCH | `/:id` | Editar coche e imágenes | Admin |
+| DELETE | `/:id` | Eliminar vehículo | Admin |
+
+### Ventas y Facturación (`/api/v1/sales`)
+| Método | Endpoint | Descripción | Acceso |
+| :--- | :--- | :--- | :--- |
+| GET | `/checkout-session/:carId` | Crea sesión de pago Stripe | Authenticated user |
+| GET | `/:saleId/factura` | Descargar factura en PDF | Authenticated user |
+
+## Estructura de Vistas (Frontend)
+La aplicación renderiza las siguientes vistas principales:
+* ` / `: Catálogo general de vehículos.
+* `/car/:id`: Vista detallada del coche seleccionado.
+* `/me`: Panel de configuración del perfil de usuario.
+* `/my-purchases`: Historial de compras del cliente.
+* `/favorites`: Lista de deseos personalizada.
+* `/manage-cars`: Panel de control de inventario (**Admin**).
+* `/admin-stats`: Visualización de métricas de negocio (**Admin**).
 
 ## Demo del Proceso de Compra
 
